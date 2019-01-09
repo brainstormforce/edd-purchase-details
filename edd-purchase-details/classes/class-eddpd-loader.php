@@ -35,12 +35,11 @@ if ( ! class_exists( 'EDDPD_Loader' ) ) {
 	 */
 	public function __construct() {
 		// Activation hook.
-		register_activation_hook(__FILE__, array( $this, 'edd_pd_add_my_custom_page_suport'));
-		register_activation_hook(__FILE__,  array( $this,'edd_pd_add_my_custom_page_history'));
+		//register_activation_hook( init , array( $this, 'edd_pd_add_my_custom_page_suport'));
+		//register_activation_hook( init ,  array( $this,'edd_pd_add_my_custom_page_history'));
 		add_shortcode ( 'edd_pd_product_history' , array( $this,  'edd_pd_product_history' ) );
         add_shortcode ( 'edd_pd_product_details' , array( $this,  'edd_pd_load_plugin' ) );
-      
-         //add_filter( 'add_page', 'edd_pd_product_history' );
+       
 		}
 
 
@@ -63,10 +62,10 @@ if ( ! class_exists( 'EDDPD_Loader' ) ) {
 	 */
 	 function edd_cs_form_render() {	
 	    echo '<div><form action="' . esc_url( $_SERVER['REQUEST_URI']) . '" method="post">';
-	    echo '<input type="email" name="edd_pd_email" value="" size="116" placeholder="Enter your email"  />';
+	    echo '<input type="email" name="edd_pd_email"  size="116" placeholder="Enter customer email address" />';
 	  	echo '<input type="submit" name="edd-pd-submitted" value="Submit"/></div>';
 	    echo '</form><hr></div>';
-		}
+	}
 
 
 	 /**
@@ -82,13 +81,11 @@ if ( ! class_exists( 'EDDPD_Loader' ) ) {
 			return ob_get_clean();
 		}
 
-		
 
-	
-	
+
 
 	/**
-	 * This template is used to display the purchase history of the current user.
+	 * Display the purchase history of the current user.
 	 *
 	 * @since 1.0.0
 	 * @return void
@@ -97,8 +94,8 @@ if ( ! class_exists( 'EDDPD_Loader' ) ) {
 		if ( isset( $_POST['edd-pd-submitted'] ) ){
 		  if( is_user_logged_in() ) {
 		     $user_info = wp_get_current_user();
-			 if ( ! empty( array_intersect( $user_info->roles, get_option('user_access')))) 
-			 	{
+		     if( ! empty ( get_option('user_access'))){
+			 if ( ! empty ( array_intersect( $user_info->roles, get_option('user_access')))) {
 				$cs_email         =  sanitize_email( $_POST["edd_pd_email"] );
 			    $customer_details =  get_user_by( 'email',$cs_email );
 
@@ -147,44 +144,44 @@ if ( ! class_exists( 'EDDPD_Loader' ) ) {
 						<div><p class="edd-no-purchases"><?php _e('You have not made any purchases','easy-digital-downloads' ); ?></p></div>
 					<?php endif;
 				} else {
-					echo 'Email dosen\'t exists... ' ;
+					echo 'Email dosen\'t exists ' ;
 				}
 			  } else {
-			  	echo 'Not valid user...';
+			  	echo 'Not valid user';
+			  }
+			  } else {
+			  	echo 'Access Denied';
 			  }
 			} else {
-				echo 'User not login ...';
+				echo 'User not login ';
 			}
 		  }
 		}
 
-
-function get_uri( $query_string = null)
-{
-	return home_url( 'history');
-}
-	
-
-	
-
+	/**
+	 * create url .
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+		function get_uri( $query_string = null)
+		{
+			return home_url( 'history');
+		}
 
 
 	/**
-	 * This method is used to display the Product History .
+	 *  Display the Product History .
 	 *
 	 * @since 1.0.0
 	 * @return void
 	 */
 		function edd_pd_product_history(){
 		    if( is_user_logged_in() )  {
-		      $user_info = wp_get_current_user();
+		     $user_info = wp_get_current_user();
+		     if( ! empty ( get_option('user_access'))){
 			 if (!empty(array_intersect($user_info->roles, get_option('user_access'))))  { ?>
-
-			 	<p><a href="<?php echo esc_url( remove_query_arg( array( 'payment_id', 'edd_pd' ) ) ); ?>" class="edd-manage-license-back edd-submit button <?php echo esc_attr( $color ); ?>"><?php _e( 'Go back', 'edd_pd' ); ?></a></p>
-	
-
 			  <p><a href="<?php echo home_url(); ?>/support" class="edd-manage-license-back edd-submit button"><?php _e( 'Go back', 'edd_pd' ); ?></a></p>
-			  
 			   <?php
 				if( isset( $_GET['payment_id']) )	{
 				$child_keys = edd_software_licensing()->get_licenses_of_purchase(base64_decode($_GET['payment_id']));
@@ -232,50 +229,14 @@ function get_uri( $query_string = null)
 			} else {
 			  	echo 'Not valid user...';
 			  }
+			} else {
+				echo "Access Denied";
+			}
 		  } else {
 			   echo 'User not login ...';
 		 }
 		}
-	/**
-	 * create support page with shortcode in EDD Suport
-	 *
-	 * @since 1.0.0
-	 * @return void
-	 */
-	function edd_pd_add_my_custom_page_suport() {
-	    // Create post object
-	    $user_id = get_current_user_id();
-	    $post_data = array(
-	      'post_title'    => wp_strip_all_tags( 'Support' ),
-	      'post_content'  => "[edd_css_product_details]",
-	      'post_status'   => 'publish',
-	      'post_author'   => $user_id,
-	      'post_type'     => 'page',
-	    );
-
-	    // Insert the post into the database
-	    wp_insert_post( $post_data );
-	}
-	/**
-	* create History page with shortcode in EDD Suport
-	*
-	* @since 1.0.0
-	* @return void
-	*/
-	function edd_pd_add_my_custom_page_history() {
-	    // Create post object
-	    $user_id = get_current_user_id();
-	    $post_data = array(
-	      'post_title'    => wp_strip_all_tags('history'),
-	      'post_content'  => "[edd_cs_product_history]",
-	      'post_status'   => 'publish',
-	      'post_author'   =>  $user_id,
-	      'post_type'     => 'page',
-	    );	
-
-	    // Insert the post into the database
-	    wp_insert_post( $post_data );
-	}       
+	
 }
 
 	EDDPD_Loader::get_instance();

@@ -9,7 +9,12 @@
 	  			 settings_fields( 'edd_pd_save_setting' );?>
 	  			      <?php do_settings_sections( 'edd_pd_save_setting' ); ?>
 		 				<?php foreach (get_editable_roles() as $role_name => $role_info):
-						 $checked = in_array( $role_name, $roles ) ? 'checked' : '';
+		 				if( ! empty($roles)){
+ 							$checked = in_array( $role_name, $roles ) ? 'checked' : '';
+		 				}else {
+		 						$checked = '';
+		 				}	
+						
 						 ?>
 		 				<fieldset>
 							<input type="checkbox" name="user_access[]" value="<?php echo $role_name ?>" <?php echo $checked; ?> > 
@@ -23,4 +28,9 @@
     	</form>
  </div>
 
- <?php print_r(get_option('user_access')); ?>
+ <?php 
+
+
+//	print_r(get_page_by_title('support'));
+ // echo 'ghdgfd';
+  ?>
