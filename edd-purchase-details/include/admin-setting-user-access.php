@@ -28,9 +28,3 @@
     	</form>
  </div>
 
- <?php 
-
-
-//	print_r(get_page_by_title('support'));
- // echo 'ghdgfd';
-  ?>

@@ -13,6 +13,8 @@
 
 define( 'EDD_PD_FILE', __FILE__ );
 define( 'EDD_PD', plugin_dir_path( __FILE__ ) );
+define( 'EDD_PD_URL', plugins_url( '/edd-purchase-details/', EDD_PD ) );
+
 require_once 'classes/class-eddpd-loader.php';
 require_once 'classes/class-edd-pd-admin.php';
 

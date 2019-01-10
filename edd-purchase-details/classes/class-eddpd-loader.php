@@ -62,9 +62,10 @@ if ( ! class_exists( 'EDDPD_Loader' ) ) {
 	 */
 	 function edd_cs_form_render() {	
 	    echo '<div><form action="' . esc_url( $_SERVER['REQUEST_URI']) . '" method="post">';
-	    echo '<input type="email" name="edd_pd_email"  size="116" placeholder="Enter customer email address" />';
-	  	echo '<input type="submit" name="edd-pd-submitted" value="Submit"/></div>';
-	    echo '</form><hr></div>';
+	    echo '<input type="email" name="edd_pd_email"  class="edd_pd_seach_textbox" size="116" placeholder="Enter customer email address" />';
+	  	echo '<input type="submit" class="edd_pd_seach_Button" name="edd-pd-submitted" value="Submit"/></div>';
+	    echo '</form><hr><br></div>';
+	   
 	}
 
 
@@ -78,8 +79,20 @@ if ( ! class_exists( 'EDDPD_Loader' ) ) {
 			ob_start();
 			$this->edd_cs_form_render();
 			$this->edd_pd_product_details();
+			$this->load_css_file();
 			return ob_get_clean();
 		}
+
+
+
+
+
+	function load_css_file()
+	{
+		wp_enqueue_style( 'EDD_PD_stylesheet', EDD_PD_URL.'css/style.css' , false, '1.0.0', 'all');
+	}
+
+
 
 
 
