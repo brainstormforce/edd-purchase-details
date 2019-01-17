@@ -84,8 +84,8 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		 * @since 0.0.1
 		 */
 		function load_css_file() {
-			
-			wp_enqueue_style( 'EDD_PD_stylesheet', EDD_PD_URL . 'assets/css/style.css' , false, '1.0.0', 'all' );
+
+			wp_enqueue_style( 'EDD_PD_stylesheet', EDD_PD_URL . 'assets/css/minified/style.css', false, '1.0.0', 'all' );
 		}
 
 		/**
@@ -112,12 +112,12 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 											<thead>
 												<tr class="edd_purchase_row">
 																<?php do_action( 'edd_ps_purchase_history_header_before' ); ?>
-													<th class="edd_purchase_id"><?php _e( 'ID', 'edd_pd' ); ?></th>
-													<th class="edd_purchase_date"><?php _e( 'Date', 'edd_pd' ); ?></th>
-													<th class="edd_purchase_products"><?php _e( 'Products', 'edd_pd' ); ?></th>
-													<th class="edd_purchase_amount"><?php _e( 'Amount', 'edd_pd' ); ?></th>
-													<th class="edd_purchase_status"><?php _e( 'Status', 'edd_pd' ); ?></th>
-													<th class="edd_purchase_details"><?php _e( 'key', 'edd_pd' ); ?></th>
+													<th class="edd_purchase_id"><?php _e( 'ID', 'edd-purchase-details' ); ?></th>
+													<th class="edd_purchase_date"><?php _e( 'Date', 'edd-purchase-details' ); ?></th>
+													<th class="edd_purchase_products"><?php _e( 'Products', 'edd-purchase-details' ); ?></th>
+													<th class="edd_purchase_amount"><?php _e( 'Amount', 'edd-purchase-details' ); ?></th>
+													<th class="edd_purchase_status"><?php _e( 'Status', 'edd-purchase-details' ); ?></th>
+													<th class="edd_purchase_details"><?php _e( 'key', 'edd-purchase-details' ); ?></th>
 																<?php do_action( 'edd_ps_purchase_history_header_after' ); ?>
 												</tr>
 											</thead>
@@ -146,7 +146,7 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 										</table>
 									</div>
 							<?php else : ?>
-							<div><p class="edd-no-purchases"><?php _e( 'You have not made any purchases', 'easy-digital-downloads' ); ?></p></div>
+							<div><p class="edd-no-purchases"><?php _e( 'You have not made any purchases', 'edd-purchase-details' ); ?></p></div>
 									<?php
 							endif;
 							} else {
@@ -186,7 +186,7 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 				if ( count( get_option( 'user_access' ) ) > 0 ) {
 					if ( count( array_intersect( $user_info->roles, get_option( 'user_access' ) ) ) > 0 ) {
 						?>
-						<p><a href="<?php echo home_url(); ?>/support" class="edd-manage-license-back edd-submit button"><?php _e( 'Go back', 'edd_pd' ); ?></a></p>
+						<p><a href="<?php echo home_url(); ?>/support" class="edd-manage-license-back edd-submit button"><?php _e( 'Go back', 'edd-purchase-details' ); ?></a></p>
 						<?php
 						if ( isset( $_GET['payment_id'] ) ) {
 								$child_keys = edd_software_licensing()->get_licenses_of_purchase( base64_decode( $_GET['payment_id'] ) );
@@ -198,11 +198,11 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 										<thead>
 											<tr class="edd_purchase_row">
 											<?php do_action( 'edd_download_history_header_start' ); ?>
-											<th class=" edd_purchase_amount"><?php _e( 'Item', 'edd-pd' ); ?></th>
-											<th class="edd_purchase_details"><?php _e( 'Key', 'edd_pd' ); ?></th>
-											<th class="edd_license_key"><?php _e( 'Status', 'edd_pd' ); ?></th>
-											<th class="edd_license_key"><?php _e( 'Activations', 'edd_pd' ); ?></th>
-											<th class="edd_purchase_date"><?php _e( 'Expiration', 'edd_pd' ); ?></th>
+											<th class=" edd_purchase_amount"><?php _e( 'Item', 'edd-purchase-details' ); ?></th>
+											<th class="edd_purchase_details"><?php _e( 'Key', 'edd-purchase-details' ); ?></th>
+											<th class="edd_license_key"><?php _e( 'Status', 'edd-purchase-details' ); ?></th>
+											<th class="edd_license_key"><?php _e( 'Activations', 'edd-purchase-details' ); ?></th>
+											<th class="edd_purchase_date"><?php _e( 'Expiration', 'edd-purchase-details' ); ?></th>
 											<?php do_action( 'edd_download_history_header_end' ); ?>
 											</tr>
 										</thead>

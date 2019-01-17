@@ -17,7 +17,7 @@
 define( 'EDD_PD_VER', '0.0.1' );
 define( 'EDD_PD_FILE', __FILE__ );
 define( 'EDD_PD', plugin_dir_path( __FILE__ ) );
-define( 'EDD_PD_URL', plugin_dir_url( __FILE__ ));
+define( 'EDD_PD_URL', plugin_dir_url( __FILE__ ) );
 
 require_once 'classes/class-edd-pd-loader.php';
 require_once 'classes/class-edd-pd-admin.php';

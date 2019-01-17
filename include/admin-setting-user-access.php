@@ -8,8 +8,8 @@
 ?>
 
 <div class="wrap">
-	<h1><?php _e( 'Give Purchase access to', 'edd_pd' ); ?> </h1>
-	<p><?php _e( 'Use these settings to limit which features users can access Purchase details.', 'edd_pd' ); ?></p>
+	<h1><?php _e( 'Give Purchase access to', 'edd-purchase-details' ); ?> </h1>
+	<p><?php _e( 'Use these settings to limit which features users can access Purchase details.', 'edd-purchase-details' ); ?></p>
 	<form action="options.php" method="post" class="edd_pd_setting_form" >
 		<div class="edd_pd_save_setting">
 		<?php

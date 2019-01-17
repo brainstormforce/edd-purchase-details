@@ -262,6 +262,9 @@ module.exports = function (grunt) {
 
     // i18n
     grunt.registerTask('i18n', ['addtextdomain', 'makepot']);
+    
+
+    grunt.registerTask('runall', [ 'clean:zip', 'copy', 'compress', 'clean:main','style', 'uglify:js', 'cssmin:css','rtlcss','sass','scss', 'postcss:style', 'rtl','addtextdomain', 'makepot']);
 
     // Bump Version - `grunt bump-version --ver=<version-number>`
     grunt.registerTask('version-bump', function (ver) {

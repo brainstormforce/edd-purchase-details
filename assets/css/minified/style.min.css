@@ -1,0 +1,1 @@
+.edd_pd_seach_Button,.edd_pd_seach_textbox{float:left;padding:10px;font-size:17px;border:1px solid grey}.edd_pd_seach_textbox{width:80%;background:#f1f1f1}.edd_pd_seach_Button{width:20%;background:#2196F3;color:#fff;border-left:none;cursor:pointer}.edd_pd_seach_Button:hover{background:#0b7dda}.edd_pd_seach_Button::after{content:"";clear:both;display:table}
