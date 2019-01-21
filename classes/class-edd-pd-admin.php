@@ -55,4 +55,4 @@ if ( ! class_exists( 'EDD_PD_Admin' ) ) {
 	}
 }
 $masterpage_obj = new EDD_PD_Admin();
-?>
+

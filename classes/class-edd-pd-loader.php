@@ -78,7 +78,6 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 			echo '</form><hr><br></div>';
 		}
 
-
 		/**
 		 * Add css file
 		 *
