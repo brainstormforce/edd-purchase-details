@@ -37,8 +37,8 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		 */
 		public function __construct() {
 			// Activation hook.
-			add_shortcode( 'edd_pd_product_history', array( $this, 'edd_pd_product_history' ) );
-			add_shortcode( 'edd_pd_product_details', array( $this, 'edd_pd_load_plugin' ) );
+			add_shortcode( 'access_to_purchase_details', array( $this, 'edd_pd_load_plugin' ) );
+			add_filter( 'the_content', array( $this, 'override_history_content' ), 9999 );
 
 		}
 
@@ -52,20 +52,6 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 			load_plugin_textdomain( 'edd_pd', false, dirname( plugin_basename( EDD_PD_PLUGIN_FILE ) ) . '/languages/' );
 		}
 
-
-		/**
-		 * Render the form on suport page
-		 *
-		 * @since 0.0.1
-		 * @return void
-		 */
-		function edd_cs_form_render() {
-			echo '<div><form action="' . esc_url( $_SERVER['REQUEST_URI'] ) . '" method="post">';
-			echo '<input type="email" name="edd_pd_email"  class="edd_pd_seach_textbox" size="116" placeholder="Enter customer email address" />';
-			echo '<input type="submit" class="edd_pd_seach_Button" name="edd-pd-submitted" value="Submit"/></div>';
-			echo '</form><hr><br></div>';
-		}
-
 		/**
 		 * Initialization of EDD PD plugin
 		 *
@@ -73,11 +59,26 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		 */
 		function edd_pd_load_plugin() {
 			ob_start();
-			$this->edd_cs_form_render();
+			$this->edd_form_render_get_user_data();
 			$this->edd_pd_product_details();
 			$this->load_css_file();
 			return ob_get_clean();
 		}
+
+		/**
+		 * Render the form for get user data.
+		 *
+		 * @since 0.0.1
+		 * @return void
+		 */
+		function edd_form_render_get_user_data() {
+			echo '<div><form action="' . esc_url( $_SERVER['REQUEST_URI'] ) . '" method="post">';
+			echo '<input type="email" name="edd_pd_email"  class="edd_pd_seach_textbox" size="116" placeholder="Enter customer email address" />';
+			echo '<input type="submit" class="edd_pd_seach_Button" name="edd-pd-submitted" value="Submit"/></div>';
+			echo '</form><hr><br></div>';
+		}
+
+
 		/**
 		 * Add css file
 		 *
@@ -85,7 +86,7 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		 */
 		function load_css_file() {
 
-			wp_enqueue_style( 'EDD_PD_stylesheet', EDD_PD_URL . 'assets/css/minified/style.css', false, '1.0.0', 'all' );
+			wp_enqueue_style( 'EDD_PD_stylesheet', EDD_PD_URL . 'assets/css/unminified/style.css', false, null, 'all' );
 		}
 
 		/**
@@ -111,14 +112,14 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 										<table id="edd_pd_user_history" class="edd-table">
 											<thead>
 												<tr class="edd_purchase_row">
-																<?php do_action( 'edd_ps_purchase_history_header_before' ); ?>
+													<?php do_action( 'access_to_purchase_details_header_before' ); ?>
 													<th class="edd_purchase_id"><?php _e( 'ID', 'edd-purchase-details' ); ?></th>
 													<th class="edd_purchase_date"><?php _e( 'Date', 'edd-purchase-details' ); ?></th>
 													<th class="edd_purchase_products"><?php _e( 'Products', 'edd-purchase-details' ); ?></th>
 													<th class="edd_purchase_amount"><?php _e( 'Amount', 'edd-purchase-details' ); ?></th>
 													<th class="edd_purchase_status"><?php _e( 'Status', 'edd-purchase-details' ); ?></th>
 													<th class="edd_purchase_details"><?php _e( 'key', 'edd-purchase-details' ); ?></th>
-																<?php do_action( 'edd_ps_purchase_history_header_after' ); ?>
+													<?php do_action( 'access_to_purchase_details_header_after' ); ?>
 												</tr>
 											</thead>
 											<tbody>
@@ -127,7 +128,7 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 												$payment = new EDD_Payment( $payment->ID );
 												?>
 												<tr class="edd_purchase_row">
-													<?php do_action( 'edd_pd_product_history_row_start', $payment->ID, $payment->payment_meta ); ?>
+													<?php do_action( 'access_to_purchase_details_row_start', $payment->ID, $payment->payment_meta ); ?>
 													<td class="edd_purchase_id">#<?php echo $payment->number; ?></td>
 													<td class="edd_purchase_date"><?php echo date_i18n( get_option( 'date_format' ), strtotime( $payment->date ) ); ?></td>
 													<td class="edd_purchase_products"><?php echo  $payment->cart_details[0]['name']; ?></span>
@@ -138,9 +139,20 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 															<?php echo $payment->status_nicename; ?>
 													</td>
 													<td class="edd_purchase_key">
-													<a href= "<?php echo esc_url( add_query_arg( 'payment_id', base64_encode( $payment->ID ), $this->get_uri() ) ); ?>" > <?php echo $payment->key; ?></a>
-													</td>
-												</tr>
+													<?php
+													$history = esc_url(
+														add_query_arg(
+															array(
+																'action'     => 'view_history',
+																'payment_id' => $payment->ID,
+															)
+														)
+													);
+													?>
+													<a href='<?php echo esc_url( $history ); ?>'><?php echo $payment->key; ?> </a>
+													<?php do_action( 'access_to_purchase_details_row_end', $payment->ID, $payment->payment_meta ); ?>
+												</td>
+											</tr>
 											<?php endforeach; ?>
 											</tbody>
 										</table>
@@ -165,31 +177,41 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		}
 
 		/**
-		 * Create url .
+		 * Override the content of the purchase history page to show our  UI
 		 *
 		 * @since 0.0.1
-		 * @return var
+		 * @param  string $content  Fpr clear old content.
+		 * @return content
 		 */
-		function get_uri() {
-			return home_url( 'history' );
+		function override_history_content( $content ) {
+			if ( isset( $_GET['action'] ) ) {
+				if ( ! empty( $_GET['action'] ) || 'view_history' == $_GET['action'] ) {
+					ob_start();
+					$this->view_history( $_GET['payment_id'] );
+					$content = ob_get_clean();
+				}
+			}
+			return $content;
 		}
 
 		/**
-		 * Display the Product History .
+		 * Display the Product History  .
 		 *
 		 * @since 0.0.1
+		 * @param  Int $payment_id   View spacific Payment_id For view history.
 		 * @return void
 		 */
-		function edd_pd_product_history() {
+		function view_history( $payment_id ) {
 			if ( is_user_logged_in() ) {
 				$user_info = wp_get_current_user();
 				if ( count( get_option( 'user_access' ) ) > 0 ) {
 					if ( count( array_intersect( $user_info->roles, get_option( 'user_access' ) ) ) > 0 ) {
 						?>
-						<p><a href="<?php echo home_url(); ?>/support" class="edd-manage-license-back edd-submit button"><?php _e( 'Go back', 'edd-purchase-details' ); ?></a></p>
+						<p><a href="<?php echo esc_url( remove_query_arg( array( 'action', 'payment_id' ) ) ); ?>" class="edd-manage-license-back edd-submit button <?php echo esc_attr( $color ); ?>"><?php _e( 'Go back', 'edd-purchase-details' ); ?></a></p>
+
 						<?php
 						if ( isset( $_GET['payment_id'] ) ) {
-								$child_keys = edd_software_licensing()->get_licenses_of_purchase( base64_decode( $_GET['payment_id'] ) );
+								$child_keys = edd_software_licensing()->get_licenses_of_purchase( $payment_id );
 							if ( ! empty( $child_keys ) ) {
 								?>
 								<div class="entry-content clear" itemprop="text">

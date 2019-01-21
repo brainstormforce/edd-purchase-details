@@ -20,21 +20,23 @@ if ( ! class_exists( 'EDD_PD_Admin' ) ) {
 		 */
 		public function __construct() {
 			// Activation hook.
-			add_action( 'admin_menu', array( $this, 'setup_menu' ) );
-			add_action( 'admin_init', array( $this, 'save_edd_pd_options' ) );
+			add_action( 'admin_init', array( $this, 'save_access_payment_history' ) );
+			add_action( 'admin_menu', array( $this, 'add_submenu' ) );
+
 		}
 
 		/**
-		 * Display menu in dashbord
+		 * Add submenu under "Downloads" in dashbord
 		 *
 		 * @since 0.0.1
 		 */
-		function setup_menu() {
-			add_menu_page( 'Plugin Settings', 'EDD PS Settings', 'manage_options', 'Settings-page-dashboard', array( $this, 'setting_page' ) );
+		function add_submenu() {
+				add_submenu_page( 'edit.php?post_type=download', __( ' Access Payment History', 'edd-purchase-details' ), __( 'Access Payment History', 'edd-purchase-details' ), 'manage_shop_settings', 'admin-setting-user-access', array( $this, 'setting_page' ) );
 		}
 
+
 		/**
-		 * Admin setting user access page display
+		 * Setting page render
 		 *
 		 * @since 0.0.1
 		 */
@@ -47,8 +49,8 @@ if ( ! class_exists( 'EDD_PD_Admin' ) ) {
 		 *
 		 * @since 0.0.1
 		 */
-		function save_edd_pd_options() {
-			register_setting( 'edd_pd_save_setting', 'user_access' );
+		function save_access_payment_history() {
+			register_setting( 'options_access_payment_history', 'user_access' );
 		}
 	}
 }
