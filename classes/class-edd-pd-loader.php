@@ -37,9 +37,25 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		 */
 		public function __construct() {
 			// Activation hook.
-			add_shortcode( 'access_to_purchase_details', array( $this, 'load_css_file' ) );
+			add_shortcode( 'access_to_purchase_details', array( $this, 'load_plugin' ) );
 			add_filter( 'the_content', array( $this, 'override_history_content' ), 9999 );
 
+		}
+
+		/**
+		 * Initialization of EDD PD plugin
+		 *
+		 * @since 1.0.0
+		 * @return obj
+		 */
+		public function load_plugin() {
+			ob_start();
+			$this->load_css_file();
+			$this->edd_form_render_get_user_data();
+			if ( isset( $_GET['user_email'] ) ) {
+				$this->edd_pd_product_details( sanitize_email( $_GET['user_email'] ) );
+			}
+			return ob_get_clean();
 		}
 
 		/**
@@ -86,19 +102,9 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 			if ( isset( $_GET['action'] ) ) {
 				if ( ! empty( $_GET['action'] ) || 'view_history' == $_GET['action'] ) {
 					ob_start();
-					$this->view_history( $_GET['payment_id'] );
+					$this->view_history( sanitize_text_field( intval( $_GET['payment_id'] ) ) );
 					$content = ob_get_clean();
 				}
-			} elseif ( ! empty( $_GET['user_email'] ) ) {
-				ob_start();
-				$this->edd_form_render_get_user_data();
-				$this->edd_pd_product_details( $_GET['user_email'] );
-				$content = ob_get_clean();
-
-			} else {
-				ob_start();
-				$this->edd_form_render_get_user_data();
-				$content = ob_get_clean();
 			}
 			return $content;
 		}
@@ -205,8 +211,8 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 						<p><a href="<?php echo esc_url( remove_query_arg( array( 'action', 'payment_id' ) ) ); ?>" class="edd-manage-license-back edd-submit button <?php echo esc_attr( $color ); ?>"><?php _e( 'Go back', 'edd-purchase-details' ); ?></a></p>
 
 						<?php
-						if ( isset( $_GET['payment_id'] ) ) {
-								$child_keys = edd_software_licensing()->get_licenses_of_purchase( $payment_id );
+						if ( isset( $payment_id ) ) {
+								$child_keys = edd_software_licensing()->get_licenses_of_purchase( sanitize_text_field( intval( $payment_id ) ) );
 							if ( ! empty( $child_keys ) ) {
 								?>
 								<div class="entry-content clear" itemprop="text">
