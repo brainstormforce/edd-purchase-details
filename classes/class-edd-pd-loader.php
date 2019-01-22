@@ -121,7 +121,7 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 				$user_info = wp_get_current_user();
 				if ( count( get_option( 'user_access' ) ) > 0 ) {
 					if ( count( array_intersect( $user_info->roles, get_option( 'user_access' ) ) ) > 0 ) {
-						
+
 						$customer_details = get_user_by( 'email', $email );
 
 						if ( ! empty( $customer_details ) ) {
@@ -182,16 +182,24 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 								<?php
 						endif;
 						} else {
-							echo 'Email address does not exist ';
+							?>
+							<div><p class="edd-no-purchases"><?php _e( 'Email address does not exist', 'edd-purchase-details' ); ?></p></div>
+								<?php
 						}
 					} else {
-						echo 'Not valid user';
+						?>
+						<div><p class="edd-no-purchases"><?php _e( 'Not valid user', 'edd-purchase-details' ); ?></p></div>
+						<?php
 					}
 				} else {
-					echo 'Access Denied';
+					?>
+						<div><p class="edd-no-purchases"><?php _e( 'Access Denied', 'edd-purchase-details' ); ?></p></div>
+						<?php
 				}
 			} else {
-				echo 'User not login ';
+				?>
+					<div><p class="edd-no-purchases"><?php _e( 'User not login', 'edd-purchase-details' ); ?></p></div>
+					<?php
 			}
 		}
 
@@ -255,18 +263,29 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 									</table>
 								</div>
 
-							<?php } else {
-								echo 'Invalid Request....!!!';
+								<?php
+							} else {
+								?>
+							<div><p class="edd-no-purchases"><?php _e( 'Invalid Request.', 'edd-purchase-details' ); ?></p></div>
+								<?php
+
 							}
 						}
 					} else {
-						echo 'Not valid user...';
+						?>
+							<div><p class="edd-no-purchases"><?php _e( 'Not valid user', 'edd-purchase-details' ); ?></p></div>
+							<?php
+
 					}
 				} else {
-					echo 'Access Denied';
+					?>
+						<div><p class="edd-no-purchases"><?php _e( 'Access Denied', 'edd-purchase-details' ); ?></p></div>
+						<?php
 				}
 			} else {
-				echo 'User not login ...';
+				?>
+				<div><p class="edd-no-purchases"><?php _e( 'User not login', 'edd-purchase-details' ); ?></p></div>
+					<?php
 			}
 		}
 	}
