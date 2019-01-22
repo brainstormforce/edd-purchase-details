@@ -39,14 +39,14 @@
 	</form>
 
 <div class="clear"></div>
-<hr>
-<h3> Getting Started </h3>
-<fieldset>
-<legend class="screen-reader-text"><span>Note : </span></legend>
-<p><label for="comment_max_links"> Once you’ve activated , you’ll be forwarded to the Getting Started  page with below Short Code  </p>
-<p><label for="comment_max_links">  [ access_to_purchase_details ]  </p>
-
-</fieldset>
+	<hr>
+	<h3> Getting Started </h3>
+	<fieldset>
+		<legend class="screen-reader-text"><span>Note : </span></legend>
+		<p><label for="comment_max_links"> Once you’ve activated , you’ll be forwarded to the Getting Started  page with below Short Code  </p>
+		<span class="shortcode"><input type="text" onfocus="this.select();" size ="30" readonly="readonly" value="[access_to_purchase_details]" class="code"></span>
+	</fieldset>
 </div>
+
 
 

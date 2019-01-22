@@ -37,6 +37,7 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		 */
 		public function __construct() {
 			// Activation hook.
+
 			add_shortcode( 'access_to_purchase_details', array( $this, 'edd_pd_load_plugin' ) );
 			add_filter( 'the_content', array( $this, 'override_history_content' ), 9999 );
 
@@ -57,12 +58,11 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		 *
 		 * @since 0.0.1
 		 */
-		function edd_pd_load_plugin() {
+		function edd_pd_load_plugin($content) {
 			ob_start();
-			$this->edd_form_render_get_user_data();
-			$this->edd_pd_product_details();
 			$this->load_css_file();
-			return ob_get_clean();
+			$content = ob_get_clean();
+			return $content;
 		}
 
 		/**
@@ -72,8 +72,8 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		 * @return void
 		 */
 		function edd_form_render_get_user_data() {
-			echo '<div><form action="' . esc_url( $_SERVER['REQUEST_URI'] ) . '" method="post">';
-			echo '<input type="email" name="edd_pd_email"  class="edd_pd_seach_textbox" size="116" placeholder="Enter customer email address" />';
+			echo '<div><form action="' . esc_url( $_SERVER['REQUEST_URI'] ) . '" method="get">';
+			echo '<input type="email" name="user_email"  class="edd_pd_seach_textbox" size="116" placeholder="Enter customer email address"  value="' . ( isset( $_GET["user_email"] ) ? esc_attr( $_GET["user_email"] ) : '' ) . '"/>' ;
 			echo '<input type="submit" class="edd_pd_seach_Button" name="edd-pd-submitted" value="Submit"/></div>';
 			echo '</form><hr><br></div>';
 		}
@@ -89,97 +89,10 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		}
 
 		/**
-		 * Display the purchase history of the current user.
-		 *
-		 * @since 0.0.1
-		 * @return void
-		 */
-		function edd_pd_product_details() {
-			if ( isset( $_POST['edd-pd-submitted'] ) ) {
-				if ( is_user_logged_in() ) {
-					$user_info = wp_get_current_user();
-					if ( count( get_option( 'user_access' ) ) > 0 ) {
-						if ( count( array_intersect( $user_info->roles, get_option( 'user_access' ) ) ) > 0 ) {
-							$cs_email         = sanitize_email( $_POST['edd_pd_email'] );
-							$customer_details = get_user_by( 'email', $cs_email );
-
-							if ( ! empty( $customer_details ) ) {
-								$payments = edd_get_users_purchases( $customer_details->ID, 50, true, 'any' );
-								if ( $payments ) :
-									do_action( 'edd_before_purchase_history', $payments ); ?>
-									<div class="entry-content clear">
-										<table id="edd_pd_user_history" class="edd-table">
-											<thead>
-												<tr class="edd_purchase_row">
-													<?php do_action( 'access_to_purchase_details_header_before' ); ?>
-													<th class="edd_purchase_id"><?php _e( 'ID', 'edd-purchase-details' ); ?></th>
-													<th class="edd_purchase_date"><?php _e( 'Date', 'edd-purchase-details' ); ?></th>
-													<th class="edd_purchase_products"><?php _e( 'Products', 'edd-purchase-details' ); ?></th>
-													<th class="edd_purchase_amount"><?php _e( 'Amount', 'edd-purchase-details' ); ?></th>
-													<th class="edd_purchase_status"><?php _e( 'Status', 'edd-purchase-details' ); ?></th>
-													<th class="edd_purchase_details"><?php _e( 'key', 'edd-purchase-details' ); ?></th>
-													<?php do_action( 'access_to_purchase_details_header_after' ); ?>
-												</tr>
-											</thead>
-											<tbody>
-											<?php
-											foreach ( $payments as $payment ) :
-												$payment = new EDD_Payment( $payment->ID );
-												?>
-												<tr class="edd_purchase_row">
-													<?php do_action( 'access_to_purchase_details_row_start', $payment->ID, $payment->payment_meta ); ?>
-													<td class="edd_purchase_id">#<?php echo $payment->number; ?></td>
-													<td class="edd_purchase_date"><?php echo date_i18n( get_option( 'date_format' ), strtotime( $payment->date ) ); ?></td>
-													<td class="edd_purchase_products"><?php echo  $payment->cart_details[0]['name']; ?></span>
-													</td>
-													<td class="edd_purchase_amount"><?php echo edd_currency_filter( edd_format_amount( $payment->total ) ); ?></span>
-													</td>
-													<td class="edd_purchase_details">
-															<?php echo $payment->status_nicename; ?>
-													</td>
-													<td class="edd_purchase_key">
-													<?php
-													$history = esc_url(
-														add_query_arg(
-															array(
-																'action'     => 'view_history',
-																'payment_id' => $payment->ID,
-															)
-														)
-													);
-													?>
-													<a href='<?php echo esc_url( $history ); ?>'><?php echo $payment->key; ?> </a>
-													<?php do_action( 'access_to_purchase_details_row_end', $payment->ID, $payment->payment_meta ); ?>
-												</td>
-											</tr>
-											<?php endforeach; ?>
-											</tbody>
-										</table>
-									</div>
-							<?php else : ?>
-							<div><p class="edd-no-purchases"><?php _e( 'You have not made any purchases', 'edd-purchase-details' ); ?></p></div>
-									<?php
-							endif;
-							} else {
-								echo 'Email address does not exist ';
-							}
-						} else {
-							echo 'Not valid user';
-						}
-					} else {
-						echo 'Access Denied';
-					}
-				} else {
-					echo 'User not login ';
-				}
-			}
-		}
-
-		/**
 		 * Override the content of the purchase history page to show our  UI
 		 *
 		 * @since 0.0.1
-		 * @param  string $content  Fpr clear old content.
+		 * @param  string $content  For clear old content.
 		 * @return content
 		 */
 		function override_history_content( $content ) {
@@ -190,8 +103,109 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 					$content = ob_get_clean();
 				}
 			}
+			else if (!empty($_GET['user_email']))
+			{
+				ob_start();
+				$this->edd_form_render_get_user_data();
+				$this->edd_pd_product_details($_GET['user_email']);
+				$content = ob_get_clean();
+				
+	       	}
+	       	else {
+	       		ob_start();
+	       		$this->edd_form_render_get_user_data();
+	       		$content = ob_get_clean();
+	       	}
 			return $content;
 		}
+
+     	/**
+		 * Display the purchase history of the current user.
+		 *
+		 * @since 0.0.1
+		 * @return void
+		 */
+		function edd_pd_product_details($email) {
+			if ( is_user_logged_in() ) {
+				$user_info = wp_get_current_user();
+				if ( count( get_option( 'user_access' ) ) > 0 ) {
+					if ( count( array_intersect( $user_info->roles, get_option( 'user_access' ) ) ) > 0 ) {
+						$user_email       = sanitize_email( $email );
+						$customer_details = get_user_by( 'email', $user_email );
+
+						if ( ! empty( $customer_details ) ) {
+							$payments = edd_get_users_purchases( $customer_details->ID, 50, true, 'any' );
+							if ( $payments ) :
+								do_action( 'edd_before_purchase_history', $payments ); ?>
+								<div class="entry-content clear">
+									<table id="edd_pd_user_history" class="edd-table">
+										<thead>
+											<tr class="edd_purchase_row">
+												<?php do_action( 'access_to_purchase_details_header_before' ); ?>
+												<th class="edd_purchase_id"><?php _e( 'ID', 'edd-purchase-details' ); ?></th>
+												<th class="edd_purchase_date"><?php _e( 'Date', 'edd-purchase-details' ); ?></th>
+												<th class="edd_purchase_products"><?php _e( 'Products', 'edd-purchase-details' ); ?></th>
+												<th class="edd_purchase_amount"><?php _e( 'Amount', 'edd-purchase-details' ); ?></th>
+												<th class="edd_purchase_status"><?php _e( 'Status', 'edd-purchase-details' ); ?></th>
+												<th class="edd_purchase_details"><?php _e( 'key', 'edd-purchase-details' ); ?></th>
+												<?php do_action( 'access_to_purchase_details_header_after' ); ?>
+											</tr>
+										</thead>
+										<tbody>
+										<?php
+										foreach ( $payments as $payment ) :
+											$payment = new EDD_Payment( $payment->ID );
+											?>
+											<tr class="edd_purchase_row">
+												<?php do_action( 'access_to_purchase_details_row_start', $payment->ID, $payment->payment_meta ); ?>
+												<td class="edd_purchase_id">#<?php echo $payment->number; ?></td>
+												<td class="edd_purchase_date"><?php echo date_i18n( get_option( 'date_format' ), strtotime( $payment->date ) ); ?></td>
+												<td class="edd_purchase_products"><?php echo  $payment->cart_details[0]['name']; ?></span>
+												</td>
+												<td class="edd_purchase_amount"><?php echo edd_currency_filter( edd_format_amount( $payment->total ) ); ?></span>
+												</td>
+												<td class="edd_purchase_details">
+														<?php echo $payment->status_nicename; ?>
+												</td>
+												<td class="edd_purchase_key">
+												<?php
+												$history = esc_url(
+													add_query_arg(
+														array(
+															'action'     => 'view_history',
+															'payment_id' => $payment->ID,
+														)
+													)
+												);
+												?>
+												<a href='<?php echo esc_url( $history ); ?>'><?php echo $payment->key; ?> </a>
+												<?php do_action( 'access_to_purchase_details_row_end', $payment->ID, $payment->payment_meta ); ?>
+											</td>
+										</tr>
+										<?php endforeach; ?>
+										</tbody>
+									</table>
+								</div>
+						<?php else : ?>
+						<div><p class="edd-no-purchases"><?php _e( 'You have not made any purchases', 'edd-purchase-details' ); ?></p></div>
+								<?php
+						endif;
+						} else {
+							echo 'Email address does not exist ';
+						}
+					} else {
+						echo 'Not valid user';
+					}
+				} else {
+					echo 'Access Denied';
+				}
+			} else {
+				echo 'User not login ';
+			}
+		}
+		
+
+
 
 		/**
 		 * Display the Product History  .
