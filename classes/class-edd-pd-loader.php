@@ -121,8 +121,8 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 				$user_info = wp_get_current_user();
 				if ( count( get_option( 'user_access' ) ) > 0 ) {
 					if ( count( array_intersect( $user_info->roles, get_option( 'user_access' ) ) ) > 0 ) {
-						$user_email       = sanitize_email( $email );
-						$customer_details = get_user_by( 'email', $user_email );
+						
+						$customer_details = get_user_by( 'email', $email );
 
 						if ( ! empty( $customer_details ) ) {
 							$payments = edd_get_users_purchases( $customer_details->ID, 50, true, 'any' );
@@ -212,7 +212,7 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 
 						<?php
 						if ( isset( $payment_id ) ) {
-								$child_keys = edd_software_licensing()->get_licenses_of_purchase( sanitize_text_field( intval( $payment_id ) ) );
+								$child_keys = edd_software_licensing()->get_licenses_of_purchase( $payment_id );
 							if ( ! empty( $child_keys ) ) {
 								?>
 								<div class="entry-content clear" itemprop="text">
