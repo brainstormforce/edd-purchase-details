@@ -37,8 +37,7 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		 */
 		public function __construct() {
 			// Activation hook.
-
-			add_shortcode( 'access_to_purchase_details', array( $this, 'edd_pd_load_plugin' ) );
+			add_shortcode( 'access_to_purchase_details', array( $this, 'load_css_file' ) );
 			add_filter( 'the_content', array( $this, 'override_history_content' ), 9999 );
 
 		}
@@ -54,18 +53,6 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		}
 
 		/**
-		 * Initialization of EDD PD plugin
-		 *
-		 * @since 0.0.1
-		 */
-		function edd_pd_load_plugin($content) {
-			ob_start();
-			$this->load_css_file();
-			$content = ob_get_clean();
-			return $content;
-		}
-
-		/**
 		 * Render the form for get user data.
 		 *
 		 * @since 0.0.1
@@ -73,7 +60,7 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		 */
 		function edd_form_render_get_user_data() {
 			echo '<div><form action="' . esc_url( $_SERVER['REQUEST_URI'] ) . '" method="get">';
-			echo '<input type="email" name="user_email"  class="edd_pd_seach_textbox" size="116" placeholder="Enter customer email address"  value="' . ( isset( $_GET["user_email"] ) ? esc_attr( $_GET["user_email"] ) : '' ) . '"/>' ;
+			echo '<input type="email" name="user_email"  class="edd_pd_seach_textbox" size="116" placeholder="Enter customer email address"  value="' . ( isset( $_GET['user_email'] ) ? esc_attr( $_GET['user_email'] ) : '' ) . '"/>';
 			echo '<input type="submit" class="edd_pd_seach_Button" name="edd-pd-submitted" value="Submit"/></div>';
 			echo '</form><hr><br></div>';
 		}
@@ -89,7 +76,7 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		}
 
 		/**
-		 * Override the content of the purchase history page to show our  UI
+		 * Call methods with request condition check.
 		 *
 		 * @since 0.0.1
 		 * @param  string $content  For clear old content.
@@ -102,30 +89,28 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 					$this->view_history( $_GET['payment_id'] );
 					$content = ob_get_clean();
 				}
-			}
-			else if (!empty($_GET['user_email']))
-			{
+			} elseif ( ! empty( $_GET['user_email'] ) ) {
 				ob_start();
 				$this->edd_form_render_get_user_data();
-				$this->edd_pd_product_details($_GET['user_email']);
+				$this->edd_pd_product_details( $_GET['user_email'] );
 				$content = ob_get_clean();
-				
-	       	}
-	       	else {
-	       		ob_start();
-	       		$this->edd_form_render_get_user_data();
-	       		$content = ob_get_clean();
-	       	}
+
+			} else {
+				ob_start();
+				$this->edd_form_render_get_user_data();
+				$content = ob_get_clean();
+			}
 			return $content;
 		}
 
-     	/**
+		/**
 		 * Display the purchase history of the current user.
 		 *
 		 * @since 0.0.1
+		 * @param  string $email  For user purchase details.
 		 * @return void
 		 */
-		function edd_pd_product_details($email) {
+		function edd_pd_product_details( $email ) {
 			if ( is_user_logged_in() ) {
 				$user_info = wp_get_current_user();
 				if ( count( get_option( 'user_access' ) ) > 0 ) {
@@ -203,9 +188,6 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 				echo 'User not login ';
 			}
 		}
-		
-
-
 
 		/**
 		 * Display the Product History  .
