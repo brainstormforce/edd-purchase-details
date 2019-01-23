@@ -5,6 +5,11 @@
  * @package EDDPD
  */
 
+// Block direct access to the file.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 
 	/**
@@ -119,7 +124,7 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		function edd_pd_product_details( $email ) {
 			if ( is_user_logged_in() ) {
 				$user_info = wp_get_current_user();
-				if ( count( get_option( 'user_access' ) ) > 0 ) {
+				if ( ! empty( get_option( 'user_access' ) ) ) {
 					if ( count( array_intersect( $user_info->roles, get_option( 'user_access' ) ) ) > 0 ) {
 
 						$customer_details = get_user_by( 'email', $email );
@@ -193,12 +198,12 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 					}
 				} else {
 					?>
-						<div><p class="edd-no-purchases"><?php _e( 'Access Denied', 'edd-purchase-details' ); ?></p></div>
+						<div><p class="edd-no-purchases"><?php _e( 'You do not have permission to access', 'edd-purchase-details' ); ?></p></div>
 						<?php
 				}
 			} else {
 				?>
-					<div><p class="edd-no-purchases"><?php _e( 'User not login', 'edd-purchase-details' ); ?></p></div>
+					<div><p class="edd-no-purchases"><?php _e( ' You are not logged in. Please log in and try again.', 'edd-purchase-details' ); ?></p></div>
 					<?php
 			}
 		}
@@ -213,7 +218,7 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		function view_history( $payment_id ) {
 			if ( is_user_logged_in() ) {
 				$user_info = wp_get_current_user();
-				if ( count( get_option( 'user_access' ) ) > 0 ) {
+				if ( ! empty ( get_option( 'user_access' ) ) ) {         	
 					if ( count( array_intersect( $user_info->roles, get_option( 'user_access' ) ) ) > 0 ) {
 						?>
 						<p><a href="<?php echo esc_url( remove_query_arg( array( 'action', 'payment_id' ) ) ); ?>" class="edd-manage-license-back edd-submit button <?php echo esc_attr( $color ); ?>"><?php _e( 'Go back', 'edd-purchase-details' ); ?></a></p>
@@ -273,18 +278,17 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 						}
 					} else {
 						?>
-							<div><p class="edd-no-purchases"><?php _e( 'Not valid user', 'edd-purchase-details' ); ?></p></div>
-							<?php
-
+						 <div><p class="edd-no-purchases"><?php _e( 'You do not have permission to access', 'edd-purchase-details' ); ?></p></div>
+						<?php
 					}
 				} else {
 					?>
-						<div><p class="edd-no-purchases"><?php _e( 'Access Denied', 'edd-purchase-details' ); ?></p></div>
+					<div><p class="edd-no-purchases"><?php _e( 'You do not have permission to access', 'edd-purchase-details' ); ?></p></div>
 						<?php
 				}
 			} else {
 				?>
-				<div><p class="edd-no-purchases"><?php _e( 'User not login', 'edd-purchase-details' ); ?></p></div>
+				<div><p class="edd-no-purchases"><?php _e( ' You are not logged in. Please log in and try again.', 'edd-purchase-details' ); ?></p></div>
 					<?php
 			}
 		}

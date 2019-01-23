@@ -5,6 +5,11 @@
  * @package EDD Purchase details
  */
 
+// Block direct access to the file.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! class_exists( 'EDD_PD_Admin' ) ) {
 	/**
 	 * EDD Purchase admin details initial setup
