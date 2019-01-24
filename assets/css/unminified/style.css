@@ -36,14 +36,28 @@
   clear: both;
   display: table;
 }
-.product_details_table
-{
+.product_details_table{
   margin-top: 5%;
 }
-.edd_purchase_key
-{
+.edd_purchase_key{
    /*word-break: break-all;*/
 }
+
+
+/* Error display Messages*/
+.edd-pd-no-login {
+  color:red;
+}
+.edd-pd-no-permission {
+ color:red;
+}
+.edd-invalid-request {
+ color:red;
+}
+.edd-no-purchases {
+ color:green;
+}
+
 
 @media only screen and (max-width: 768px) {
 .product_details_table {

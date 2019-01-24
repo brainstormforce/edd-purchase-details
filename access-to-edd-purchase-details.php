@@ -28,4 +28,12 @@ require_once 'classes/class-edd-pd-loader.php';
 require_once 'classes/class-edd-pd-admin.php';
 
 
+/*
+if ( ! class_exists( 'Easy_Digital_Downloads' ) ) {
+
+	$url = network_admin_url() . 'plugin-install.php?s=easy+digital+downloads&tab=search';
+	// translators: %s: plugin install link.
+	printf( __( '<div class="update-nag bsf-update-nag">Please install and activate <i><a href="%s">Easy Digital Downloads</a></i> plugin in order to use Automate Mautic for Easy Digital Downloads.</div>', 'automateplug-mautic-addon' ), $url );
+}
+*/
 
