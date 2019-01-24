@@ -40,3 +40,15 @@
 {
   margin-top: 5%;
 }
+.edd_purchase_key
+{
+   /*word-break: break-all;*/
+}
+
+@media only screen and (max-width: 768px) {
+.product_details_table {
+overflow: hidden;
+overflow-x: scroll;
+display:block;
+}
+}

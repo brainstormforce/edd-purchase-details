@@ -54,9 +54,9 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		 * @return obj
 		 */
 		public function load_plugin() {
-
 			ob_start();
 			$this->load_css_file();
+
 			$this->edd_form_render_get_user_data();
 			if ( isset( $_GET['user_email'] ) ) {
 				$this->edd_pd_product_details( sanitize_email( $_GET['user_email'] ) );
@@ -148,7 +148,7 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 							if ( $payments ) :
 								do_action( 'edd_before_purchase_history', $payments );
 								?>
-								<div class="entry-content clear">
+								<div class="entry-content product_details clear">
 									<table id="edd_pd_user_history" class="product_details_table">
 										<thead>
 											<tr class="edd_purchase_row">
