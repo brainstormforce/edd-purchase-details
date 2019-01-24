@@ -54,6 +54,7 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		 * @return obj
 		 */
 		public function load_plugin() {
+
 			ob_start();
 			$this->load_css_file();
 			$this->edd_form_render_get_user_data();
@@ -61,6 +62,7 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 				$this->edd_pd_product_details( sanitize_email( $_GET['user_email'] ) );
 			}
 			return ob_get_clean();
+
 		}
 
 		/**
@@ -70,6 +72,7 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		 * @return void
 		 */
 		public function localization() {
+
 			load_plugin_textdomain( 'edd_pd', false, dirname( plugin_basename( EDD_PD_PLUGIN_FILE ) ) . '/languages/' );
 		}
 
@@ -80,15 +83,12 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		 * @return void
 		 */
 		function edd_form_render_get_user_data() {
-			$value = ( isset( $_GET['user_email'] ) ? esc_attr( $_GET['user_email'] ) : '' );
-			?>
+
+			$value = ( isset( $_GET['user_email'] ) ? esc_attr( $_GET['user_email'] ) : '' ); ?>
 			<div class="widget artwork-seachform search" rol="search">
-
-				<h3 class="widget-title"&gt;Search Artwork&lt;/h3>
-
 				<form role="search" action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ); ?>" method="get">
 
-					<input type="search" class="edd_pd_seach_textbox" name="user_email" placeholder="Enter customer email address" value="<?php echo $value; ?>" >
+					<input type="email" class="edd_pd_seach_textbox" name="user_email" placeholder="Enter customer email address" value="<?php echo $value; ?>" >
 
 					<input type="submit" alt="Search" value="Search"  class="edd_pd_seach_Button"  />
 
@@ -116,6 +116,7 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		 * @return content
 		 */
 		function override_history_content( $content ) {
+
 			if ( isset( $_GET['action'] ) ) {
 				if ( ! empty( $_GET['action'] ) || 'view_history' == $_GET['action'] ) {
 					ob_start();
@@ -134,6 +135,7 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		 * @return void
 		 */
 		function edd_pd_product_details( $email ) {
+
 			if ( is_user_logged_in() ) {
 				$user_info = wp_get_current_user();
 				if ( is_array( get_option( 'user_access' ) ) ) {
@@ -229,6 +231,7 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		 * @return void
 		 */
 		function view_history( $payment_id ) {
+
 			if ( is_user_logged_in() ) {
 				$user_info = wp_get_current_user();
 				if ( is_array( get_option( 'user_access' ) ) ) {
