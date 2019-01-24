@@ -1,3 +1,11 @@
+/**
+ * Plugin Name: Easy Digital Downloads - Access to Purchase Details
+ * Plugin URI: https://www.brainstormforce.com
+ * Author: Brainstorm Force
+ * Author URI: https://www.brainstormforce.com
+ * Version: 0.0.1
+ */
+ 
 .edd_pd_seach_textbox{
   padding: 10px;
   font-size: 17px;
@@ -27,4 +35,8 @@
   content: "";
   clear: both;
   display: table;
+}
+.product_details_table
+{
+  margin-top: 8%;
 }

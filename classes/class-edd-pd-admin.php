@@ -46,7 +46,7 @@ if ( ! class_exists( 'EDD_PD_Admin' ) ) {
 		 * @since 0.0.1
 		 */
 		function setting_page() {
-			require_once EDD_PD . 'include/admin-setting-user-access.php';
+			require_once EDD_PD . 'includes/admin-setting-user-access.php';
 		}
 
 		/**

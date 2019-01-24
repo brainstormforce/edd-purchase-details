@@ -80,10 +80,22 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		 * @return void
 		 */
 		function edd_form_render_get_user_data() {
-			echo '<div><form action="' . esc_url( $_SERVER['REQUEST_URI'] ) . '" method="get">';
-			echo '<input type="email" name="user_email"  class="edd_pd_seach_textbox" size="116" placeholder="Enter customer email address"  value="' . ( isset( $_GET['user_email'] ) ? esc_attr( $_GET['user_email'] ) : '' ) . '"/>';
-			echo '<input type="submit" class="edd_pd_seach_Button" name="edd-pd-submitted" value="Submit"/></div>';
-			echo '</form><hr><br></div>';
+			$value = ( isset( $_GET['user_email'] ) ? esc_attr( $_GET['user_email'] ) : '' );
+			?>
+			<div class="widget artwork-seachform search" rol="search">
+
+				<h3 class="widget-title"&gt;Search Artwork&lt;/h3>
+
+				<form role="search" action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ); ?>" method="get">
+
+					<input type="search" class="edd_pd_seach_textbox" name="user_email" placeholder="Enter customer email address" value="<?php echo $value; ?>" >
+
+					<input type="submit" alt="Search" value="Search"  class="edd_pd_seach_Button"  />
+
+				</form>
+
+			</div>
+			<?php
 		}
 
 		/**
@@ -124,7 +136,7 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		function edd_pd_product_details( $email ) {
 			if ( is_user_logged_in() ) {
 				$user_info = wp_get_current_user();
-				if ( ! empty( get_option( 'user_access' ) ) ) {
+				if ( is_array( get_option( 'user_access' ) ) ) {
 					if ( count( array_intersect( $user_info->roles, get_option( 'user_access' ) ) ) > 0 ) {
 
 						$customer_details = get_user_by( 'email', $email );
@@ -132,9 +144,10 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 						if ( ! empty( $customer_details ) ) {
 							$payments = edd_get_users_purchases( $customer_details->ID, 50, true, 'any' );
 							if ( $payments ) :
-								do_action( 'edd_before_purchase_history', $payments ); ?>
+								do_action( 'edd_before_purchase_history', $payments );
+								?>
 								<div class="entry-content clear">
-									<table id="edd_pd_user_history" class="edd-table">
+									<table id="edd_pd_user_history" class="product_details_table">
 										<thead>
 											<tr class="edd_purchase_row">
 												<?php do_action( 'access_to_purchase_details_header_before' ); ?>
@@ -193,12 +206,12 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 						}
 					} else {
 						?>
-						<div><p class="edd-no-purchases"><?php _e( 'Not valid user', 'edd-purchase-details' ); ?></p></div>
+						<div><p class="edd-no-purchases"><?php _e( 'You do not have permission to access this page', 'edd-purchase-details' ); ?></p></div>
 						<?php
 					}
 				} else {
 					?>
-						<div><p class="edd-no-purchases"><?php _e( 'You do not have permission to access', 'edd-purchase-details' ); ?></p></div>
+						<div><p class="edd-no-purchases"><?php _e( 'You do not have permission to access this page', 'edd-purchase-details' ); ?></p></div>
 						<?php
 				}
 			} else {
@@ -218,7 +231,7 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		function view_history( $payment_id ) {
 			if ( is_user_logged_in() ) {
 				$user_info = wp_get_current_user();
-				if ( ! empty ( get_option( 'user_access' ) ) ) {         	
+				if ( is_array( get_option( 'user_access' ) ) ) {
 					if ( count( array_intersect( $user_info->roles, get_option( 'user_access' ) ) ) > 0 ) {
 						?>
 						<p><a href="<?php echo esc_url( remove_query_arg( array( 'action', 'payment_id' ) ) ); ?>" class="edd-manage-license-back edd-submit button <?php echo esc_attr( $color ); ?>"><?php _e( 'Go back', 'edd-purchase-details' ); ?></a></p>
@@ -273,17 +286,16 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 								?>
 							<div><p class="edd-no-purchases"><?php _e( 'Invalid Request.', 'edd-purchase-details' ); ?></p></div>
 								<?php
-
 							}
 						}
 					} else {
 						?>
-						 <div><p class="edd-no-purchases"><?php _e( 'You do not have permission to access', 'edd-purchase-details' ); ?></p></div>
+						<div><p class="edd-no-purchases"><?php _e( 'You do not have permission to access this page', 'edd-purchase-details' ); ?></p></div>
 						<?php
 					}
 				} else {
 					?>
-					<div><p class="edd-no-purchases"><?php _e( 'You do not have permission to access', 'edd-purchase-details' ); ?></p></div>
+					<div><p class="edd-no-purchases"><?php _e( 'You do not have permission to access this page', 'edd-purchase-details' ); ?></p></div>
 						<?php
 				}
 			} else {

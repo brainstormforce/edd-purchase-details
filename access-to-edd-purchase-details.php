@@ -11,6 +11,11 @@
  * @package EDD-PD
  */
 
+// Block direct access to the file.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Define constants.
  */

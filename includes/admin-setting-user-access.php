@@ -5,11 +5,15 @@
  * @package EDD Purchase
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 ?>
 
 <div class="wrap">
 	<h1><?php _e( 'Access Payment History ', 'edd-purchase-details' ); ?> </h1>
-	<h3><?php _e( 'Use these settings to limit which features users can Access Payment History.', 'edd-purchase-details' ); ?></h3>
+	<h3><?php _e( 'Manage which user roles can access purchase details information.', 'edd-purchase-details' ); ?></h3>
 	<form action="options.php" method="post" class="edd_pd_setting_form" >
 		<div class="edd_pd_save_setting">
 		<?php
@@ -40,10 +44,10 @@
 
 <div class="clear"></div>
 	<hr>
-	<h3> Getting Started </h3>
+	<h3> <?php _e( 'Getting Started', 'edd-purchase-details' ); ?> </h3>
 	<fieldset>
 		<legend class="screen-reader-text"><span>Note : </span></legend>
-		<p><label for="comment_max_links"> Once you’ve activated , you’ll be forwarded to the Getting Started  page with below Short Code  </p>
+		<p><label for="comment_max_links"> <?php _e( 'Copy this shortcode and paste it into your post or page', 'edd-purchase-details' ); ?> </p>
 		<span class="shortcode"><input type="text" onfocus="this.select();" size ="30" readonly="readonly" value="[access_to_purchase_details]" class="code"></span>
 	</fieldset>
 </div>
