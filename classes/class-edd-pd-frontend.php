@@ -270,6 +270,8 @@ if ( ! class_exists( 'EDD_PD_Frontend' ) ) {
 			if ( is_user_logged_in() ) {
 
 				if ( $this->check_valid_user() ) {
+					$color = edd_get_option( 'checkout_color', 'gray' );
+					$color = ( 'inherit' == $color ) ? '' : $color;
 
 					?>
 						<p><a href="<?php echo esc_url( remove_query_arg( array( 'action', 'payment_id' ) ) ); ?>" class="edd-manage-license-back edd-submit button <?php echo esc_attr( $color ); ?>"><?php _e( 'Go back', 'edd-purchase-details' ); ?></a></p>
