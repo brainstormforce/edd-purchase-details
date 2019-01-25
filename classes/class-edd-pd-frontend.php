@@ -1,6 +1,6 @@
 <?php
 /**
- * EDD purchase details Loader class.
+ * EDD purchase details Frontend class.
  *
  * @package EDDPD
  */
@@ -10,20 +10,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'Easy_Digital_Downloads' ) ) {
-	echo 'yes';
-} else {
-	echo 'no';
-}
-
-if ( ! class_exists( 'EDD_PD_Loader' ) ) {
+if ( ! class_exists( 'EDD_PD_Frontend' ) ) {
 
 	/**
-	 * Class EDDPD_Loader.
+	 * Class EDD_PD_Frontend.
 	 *
 	 * @since 0.0.1
 	 */
-	final class EDD_PD_Loader {
+	final class EDD_PD_Frontend {
 
 		/**
 		 * Class instance.
@@ -47,11 +41,10 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		 *  Constructor
 		 */
 		public function __construct() {
-
 			add_shortcode( 'access_to_purchase_details', array( $this, 'load_plugin' ) );
 			add_filter( 'the_content', array( $this, 'override_history_content' ), 9999 );
-
 		}
+
 
 		/**
 		 * Initialization of EDD PD plugin
@@ -62,7 +55,6 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		public function load_plugin() {
 			ob_start();
 			$this->load_css_file();
-
 			$this->edd_form_render_get_user_data();
 			if ( isset( $_GET['user_email'] ) ) {
 				$this->edd_pd_product_details( sanitize_email( $_GET['user_email'] ) );
@@ -142,6 +134,7 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		 */
 		function check_valid_user() {
 			if ( is_array( get_option( 'user_access' ) ) ) {
+				$user_info = wp_get_current_user();
 				if ( count( array_intersect( $user_info->roles, get_option( 'user_access' ) ) ) > 0 ) {
 					return true;
 				}
@@ -230,19 +223,16 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 						endif;
 
 					} else {
-
 						?>
-						 <div><p class="edd-no-purchases"><?php _e( 'This user not made any purchases', 'edd-purchase-details' ); ?></p></div>
+						<div><p class="edd-no-purchases"><?php _e( 'This user not made any purchases', 'edd-purchase-details' ); ?></p></div>
 						<?php
 					}
 				} else {
-
 					?>
-					  <div><p class="edd-pd-no-permission"><?php _e( 'You do not have permission to access this page', 'edd-purchase-details' ); ?></p></div>
+					<div><p class="edd-pd-no-permission"><?php _e( 'You do not have permission to access this page', 'edd-purchase-details' ); ?></p></div>
 					<?php
 				}
 			} else {
-
 				?>
 				<div><p class="edd-pd-no-login"><?php _e( ' You are not logged in. Please log in and try again.', 'edd-purchase-details' ); ?></p></div>
 				<?php
@@ -336,8 +326,7 @@ if ( ! class_exists( 'EDD_PD_Loader' ) ) {
 		}
 
 
-
 	}
-	EDD_PD_Loader::get_instance();
+	EDD_PD_Frontend::get_instance();
 }
 ?>
