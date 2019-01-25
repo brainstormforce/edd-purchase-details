@@ -62,17 +62,6 @@ if ( ! class_exists( 'EDD_PD_Frontend' ) ) {
 		}
 
 		/**
-		 * Load the localization files
-		 *
-		 * @since 0.0.1
-		 * @return void
-		 */
-		public function localization() {
-
-			load_plugin_textdomain( 'edd_pd', false, dirname( plugin_basename( EDD_PD_PLUGIN_FILE ) ) . '/languages/' );
-		}
-
-		/**
 		 * Render the form for get user data.
 		 *
 		 * @since 0.0.1
