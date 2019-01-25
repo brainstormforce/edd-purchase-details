@@ -56,9 +56,7 @@ if ( ! class_exists( 'EDD_PD_Frontend' ) ) {
 			ob_start();
 			$this->load_css_file();
 			$this->edd_form_render_get_user_data();
-			if ( isset( $_GET['user_email'] ) ) {
-				$this->edd_pd_product_details( sanitize_email( $_GET['user_email'] ) );
-			}
+			$this->puchase_details_load();
 			return ob_get_clean();
 
 		}
@@ -82,10 +80,10 @@ if ( ! class_exists( 'EDD_PD_Frontend' ) ) {
 		 */
 		function edd_form_render_get_user_data() {
 
-			$value = ( isset( $_GET['user_email'] ) ? esc_attr( $_GET['user_email'] ) : '' ); ?>
+			$value = ( isset( $_GET['user_email'] ) ? sanitize_email( $_GET['user_email'] ) : '' ); ?>
 			<div class="widget artwork-seachform search" rol="search">
 				<form role="search" action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ); ?>" method="get">
-
+					<?php wp_nonce_field( 'handle_custom_form', 'nonce_custom_form' ); ?>
 					<input type="email" class="edd_pd_seach_textbox" name="user_email" placeholder="Enter customer email address" value="<?php echo $value; ?>" required/ >
 
 					<input type="submit" alt="Search" value="Search"  class="edd_pd_seach_Button"  />
@@ -118,11 +116,28 @@ if ( ! class_exists( 'EDD_PD_Frontend' ) ) {
 			if ( isset( $_GET['action'] ) ) {
 				if ( ! empty( $_GET['action'] ) || 'view_history' == $_GET['action'] ) {
 					ob_start();
-					$this->view_history( sanitize_text_field( intval( $_GET['payment_id'] ) ) );
+					$this->view_history( intval( $_GET['payment_id'] ) );
 					$content = ob_get_clean();
 				}
 			}
 			return $content;
+		}
+
+
+		/**
+		 * Call purchase details methods form with validate.
+		 *
+		 * @since 0.0.1
+		 */
+		function puchase_details_load() {
+
+			if ( ! empty( $_REQUEST['nonce_custom_form'] ) ) {
+				if ( wp_verify_nonce( $_REQUEST['nonce_custom_form'], 'handle_custom_form' ) ) {
+					if ( isset( $_GET['user_email'] ) ) {
+						$this->edd_pd_product_details( sanitize_email( $_GET['user_email'] ) );
+					}
+				}
+			}
 		}
 
 
