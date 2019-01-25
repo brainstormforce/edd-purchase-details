@@ -86,7 +86,7 @@ if ( ! class_exists( 'EDD_PD_Frontend' ) ) {
 			<div class="widget artwork-seachform search" rol="search">
 				<form role="search" action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ); ?>" method="get">
 
-					<input type="email" class="edd_pd_seach_textbox" name="user_email" placeholder="Enter customer email address" value="<?php echo $value; ?>" >
+					<input type="email" class="edd_pd_seach_textbox" name="user_email" placeholder="Enter customer email address" value="<?php echo $value; ?>" required/ >
 
 					<input type="submit" alt="Search" value="Search"  class="edd_pd_seach_Button"  />
 
@@ -243,7 +243,7 @@ if ( ! class_exists( 'EDD_PD_Frontend' ) ) {
 		 * Display the Product History  .
 		 *
 		 * @since 0.0.1
-		 * @param  Int $payment_id   View spacific Payment_id For view history.
+		 * @param  Int $payment_id   View history by payment_id
 		 * @return void
 		 */
 		function view_history( $payment_id ) {

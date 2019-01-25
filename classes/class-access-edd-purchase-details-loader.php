@@ -47,7 +47,7 @@ if ( ! class_exists( 'Access_Edd_Purchase_Details_Loader' ) ) {
 		/**
 		 * Loads plugin files.
 		 *
-		 * @since 1.0.0
+		 * @since 0.0.1
 		 *
 		 * @return void
 		 */
@@ -63,7 +63,7 @@ if ( ! class_exists( 'Access_Edd_Purchase_Details_Loader' ) ) {
 		/**
 		 * Fires admin notice when Elementor is not installed and activated.
 		 *
-		 * @since 1.0.0
+		 * @since 0.0.1
 		 *
 		 * @return void
 		 */
