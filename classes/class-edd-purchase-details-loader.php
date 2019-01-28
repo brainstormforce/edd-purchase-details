@@ -52,7 +52,7 @@ if ( ! class_exists( 'Edd_Purchase_Details_Loader' ) ) {
 		 * @return void
 		 */
 		public function filter_plugins_loaded() {
-			if ( class_exists( 'Easy_Digital_Downloads' ) && class_exists( 'EDD_Software_Licensing' ) ) {
+			if ( class_exists( 'Easy_Digital_Downloads' ) ) {
 					require_once EDD_PD . 'classes/class-edd-purchase-details-frontend.php';
 					require_once EDD_PD . 'classes/class-edd-purchase-details-admin.php';
 					add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
@@ -71,7 +71,7 @@ if ( ! class_exists( 'Edd_Purchase_Details_Loader' ) ) {
 		public  function fails_to_load() {
 			$class = 'notice notice-error';
 			/* translators: %s: html tags */
-			$message = sprintf( __( 'The %1$s Access to Purchase Details %2$s plugin requires %1$s Easy Digital Downloads %2$s & %1$s Easy Digital Downloads - Software Licensing %2$s  plugin installed & activated.', 'cartflows' ), '<strong>', '</strong>' );
+			$message = sprintf( __( 'The %1$s EDD Purchase Details %2$s plugin requires %1$s Easy Digital Downloads %2$s plugin installed & activated.', 'edd-purchase-details' ), '<strong>', '</strong>' );
 
 			printf( '<div class="%1$s"><p>%2$s</p>%3$s</div>', esc_attr( $class ), $message, '' );
 		}
