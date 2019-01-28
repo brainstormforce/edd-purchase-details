@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Easy Digital Downloads - EDD Purchase Details
+ * Plugin Name: Easy Digital Downloads - Purchase Details
  * Plugin URI: https://www.brainstormforce.com
  * Author: Brainstorm Force
  * Author URI: https://www.brainstormforce.com
@@ -27,4 +27,3 @@ define( 'EDD_PD_URL', plugin_dir_url( __FILE__ ) );
  * Extensions
  */
 require_once 'classes/class-edd-purchase-details-loader.php';
-

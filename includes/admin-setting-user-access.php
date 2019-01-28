@@ -51,6 +51,3 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<span class="shortcode"><input type="text" onfocus="this.select();" size ="30" readonly="readonly" value="[access_to_purchase_details]" class="code"></span>
 	</fieldset>
 </div>
-
-
-

@@ -61,4 +61,3 @@ if ( ! class_exists( 'EDD_Purchase_Details_Admin' ) ) {
 	}
 }
 $masterpage_obj = new EDD_Purchase_Details_Admin();
-
