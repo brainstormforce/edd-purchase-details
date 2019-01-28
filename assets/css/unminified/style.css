@@ -1,0 +1,63 @@
+/**
+ * Plugin Name: Easy Digital Downloads - Access to Purchase Details
+ * Plugin URI: https://www.brainstormforce.com
+ * Author: Brainstorm Force
+ * Author URI: https://www.brainstormforce.com
+ * Version: 0.0.1
+ */
+
+.edd_pd_seach_textbox{
+  padding: 10px;
+  border: 1px solid grey;
+  float: left;
+  width: 80%;
+  background: #f1f1f1;
+}
+
+.edd_pd_seach_Button{
+  float: left;
+  width: 20%;
+  padding: 10px;
+  background: #2196F3;
+  color: white;
+  border: 1px solid grey;
+  border-left: none;
+  cursor: pointer;
+}
+
+.edd_pd_seach_Button:hover {
+  background: #0b7dda;
+}
+
+.edd_pd_seach_Button::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+.product_details_table{
+  margin-top: 5%;
+}
+  
+
+/* Error display Messages*/
+.edd-pd-no-login {
+  color:red;
+}
+.edd-pd-no-permission {
+ color:red;
+}
+.edd-invalid-request {
+ color:red;
+}
+.edd-no-purchases {
+ color:green;
+}
+
+
+@media only screen and (max-width: 768px) {
+.product_details_table {
+overflow: hidden;
+overflow-x: scroll;
+display:block;
+}
+}
