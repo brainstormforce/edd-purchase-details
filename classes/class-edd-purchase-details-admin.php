@@ -10,13 +10,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'EDD_PD_Admin' ) ) {
+if ( ! class_exists( 'EDD_Purchase_Details_Admin' ) ) {
 	/**
 	 * EDD Purchase admin details initial setup
 	 *
 	 * @since 0.0.1
 	 */
-	class EDD_PD_Admin {
+	class EDD_Purchase_Details_Admin {
 		/**
 		 * Constructor
 		 *
@@ -60,5 +60,5 @@ if ( ! class_exists( 'EDD_PD_Admin' ) ) {
 		}
 	}
 }
-$masterpage_obj = new EDD_PD_Admin();
+$masterpage_obj = new EDD_Purchase_Details_Admin();
 
