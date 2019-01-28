@@ -10,14 +10,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'EDD_PD_Frontend' ) ) {
+if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 
 	/**
-	 * Class EDD_PD_Frontend.
+	 * Class EDD_Purchase-Details_Frontend.
 	 *
 	 * @since 0.0.1
 	 */
-	final class EDD_PD_Frontend {
+	final class EDD_Purchase_Details_Frontend {
 
 		/**
 		 * Class instance.
@@ -337,6 +337,6 @@ if ( ! class_exists( 'EDD_PD_Frontend' ) ) {
 
 
 	}
-	EDD_PD_Frontend::get_instance();
+	EDD_Purchase_Details_Frontend::get_instance();
 }
 ?>
