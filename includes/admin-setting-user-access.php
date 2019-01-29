@@ -2,7 +2,7 @@
 /**
  * Admin setting for user access
  *
- * @package EDD Purchase
+ * @package EDD-PD
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

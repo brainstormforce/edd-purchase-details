@@ -2,7 +2,7 @@
 /**
  * EDD purchase details Frontend class.
  *
- * @package EDDPD
+ * @package EDD-PD
  */
 
 // Block direct access to the file.
