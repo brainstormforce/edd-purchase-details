@@ -56,7 +56,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 			ob_start();
 			$this->load_css_file();
 			$this->edd_form_render_get_user_data();
-			$this->puchase_details_load();
+			$this->load_puchase_details();
 			return ob_get_clean();
 
 		}
@@ -73,9 +73,9 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 			<div class="widget artwork-seachform search" rol="search">
 				<form role="search" action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ); ?>" method="get">
 					<?php wp_nonce_field( 'handle_custom_form', 'nonce_custom_form' ); ?>
-					<input type="email" class="edd_pd_seach_textbox" name="user_email" placeholder="Enter customer email address" value="<?php echo $value; ?>" required/ >
+					<input type="email" class="edd_pd_seach_textbox" name="user_email" placeholder=" <?php _e( 'Enter customer email address', 'edd-purchase-details' ); ?>" value="<?php echo $value; ?>" required/ >
 
-					<input type="submit" alt="Search" value="Search"  class="edd_pd_seach_Button"  />
+					<input type="submit" alt="Search" value=" <?php _e( 'Search', 'edd-purchase-details' ); ?> "  class="edd_pd_seach_Button"  />
 
 				</form>
 
@@ -90,7 +90,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 		 */
 		function load_css_file() {
 
-			wp_enqueue_style( 'EDD_PD_stylesheet', EDD_PD_URL . 'assets/css/unminified/style.css', false, null, 'all' );
+			wp_enqueue_style( 'EDD_PD_stylesheet', EDD_PD_URL . 'assets/css/frontend.css', false, null, 'all' );
 		}
 
 		/**
@@ -118,12 +118,12 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 		 *
 		 * @since 0.0.1
 		 */
-		function puchase_details_load() {
+		function load_puchase_details() {
 
 			if ( ! empty( $_REQUEST['nonce_custom_form'] ) ) {
 				if ( wp_verify_nonce( $_REQUEST['nonce_custom_form'], 'handle_custom_form' ) ) {
 					if ( isset( $_GET['user_email'] ) ) {
-						$this->edd_pd_product_details( sanitize_email( $_GET['user_email'] ) );
+						$this->view_product_details( sanitize_email( $_GET['user_email'] ) );
 					}
 				}
 			}
@@ -156,7 +156,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 		 * @param  string $email  For user purchase details.
 		 * @return void
 		 */
-		function edd_pd_product_details( $email ) {
+		function view_product_details( $email ) {
 
 			if ( is_user_logged_in() ) {
 
@@ -336,12 +336,11 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 			} else {
 
 				?>
-				<div><p class="edd-pd-no-login"><?php _e( ' You are not logged in. Please log in and try again.', 'edd-purchase-details' ); ?></p></div><?php
+				<div><p class="edd-pd-no-login"><?php _e( ' You are not logged in. Please log in and try again.', 'edd-purchase-details' ); ?></p></div>
+				<?php
 			}
 		}
-
 
 	}
 	EDD_Purchase_Details_Frontend::get_instance();
 }
-?>

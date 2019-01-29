@@ -135,4 +135,3 @@ if ( ! class_exists( 'Edd_Purchase_Details_Loader' ) ) {
 	}
 	Edd_Purchase_Details_Loader::get_instance();
 }
-
