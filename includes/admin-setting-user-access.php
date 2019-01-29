@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<form action="options.php" method="post" class="edd_pd_setting_form" >
 		<div class="edd_pd_save_setting">
 		<?php
-		$roles = get_option( 'user_access' );
+		$roles = get_option( 'edd_pd_user_access' );
 		settings_fields( 'options_access_payment_history' );
 		do_settings_sections( 'options_access_payment_history' );
 		foreach ( get_editable_roles() as $role_name => $role_info ) :
@@ -31,13 +31,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 			}
 			?>
 			<fieldset>
-				<input type="checkbox" name="user_access[]" value="<?php echo $role_name; ?>" <?php echo $checked; ?>>
+				<input type="checkbox" name="edd_pd_user_access[]" value="<?php echo $role_name; ?>" <?php echo $checked; ?>>
 				<?php echo esc_html( ucwords( str_replace( '_', ' ', $role_name ) ) ); ?>
 			</fieldset>
 			<?php
 		endforeach;
 		submit_button();
-		wp_nonce_field( 'edd-ps-user-access', 'user-access-nonce' );
+		wp_nonce_field( 'edd-pd-user-access', 'edd-pd-user-access-nonce' );
 		?>
 		</div>
 	</form>
