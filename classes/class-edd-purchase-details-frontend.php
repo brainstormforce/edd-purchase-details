@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 
 	/**
-	 * Class EDD_Purchase-Details_Frontend.
+	 * Class EDD_Purchase_Details_Frontend.
 	 *
 	 * @since 0.0.1
 	 */
@@ -72,7 +72,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 			$value = ( isset( $_GET['user_email'] ) ? sanitize_email( $_GET['user_email'] ) : '' ); ?>
 			<div class="widget artwork-seachform search" rol="search">
 				<form role="search" action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ); ?>" method="get">
-					<?php wp_nonce_field( 'handle_custom_form', 'nonce_custom_form' ); ?>
+					<?php wp_nonce_field( 'edd_pd_handle_custom_form', 'edd_pd_nonce_custom_form' ); ?>
 					<input type="email" class="edd_pd_seach_textbox" name="user_email" placeholder=" <?php _e( 'Enter customer email address', 'edd-purchase-details' ); ?>" value="<?php echo $value; ?>" required/ >
 
 					<input type="submit" alt="Search" value=" <?php _e( 'Search', 'edd-purchase-details' ); ?> "  class="edd_pd_seach_Button"  />
@@ -120,8 +120,8 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 		 */
 		function load_puchase_details() {
 
-			if ( ! empty( $_REQUEST['nonce_custom_form'] ) ) {
-				if ( wp_verify_nonce( $_REQUEST['nonce_custom_form'], 'handle_custom_form' ) ) {
+			if ( ! empty( $_REQUEST['edd_pd_nonce_custom_form'] ) ) {
+				if ( wp_verify_nonce( $_REQUEST['edd_pd_nonce_custom_form'], 'edd_pd_handle_custom_form' ) ) {
 					if ( isset( $_GET['user_email'] ) ) {
 						$this->view_product_details( sanitize_email( $_GET['user_email'] ) );
 					}
@@ -137,9 +137,9 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 		 * @return bool
 		 */
 		function check_valid_user() {
-			if ( is_array( get_option( 'user_access' ) ) ) {
+			if ( is_array( get_option( 'edd_pd_user_access' ) ) ) {
 				$user_info = wp_get_current_user();
-				if ( count( array_intersect( $user_info->roles, get_option( 'user_access' ) ) ) > 0 ) {
+				if ( count( array_intersect( $user_info->roles, get_option( 'edd_pd_user_access' ) ) ) > 0 ) {
 					return true;
 				}
 			} elseif ( current_user_can( 'administrator' ) ) {
@@ -167,7 +167,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 					if ( ! empty( $customer_details ) ) {
 						$payment_ids = edd_get_users_purchases( $customer_details->ID, 50, true, 'any' );
 						if ( $payment_ids ) :
-							do_action( 'edd_before_purchase_history', $payment_ids );
+							do_action( 'access_to_purchase_before_purchase_history', $payment_ids );
 							?>
 							<div class="entry-content product_details clear">
 								<table id="edd_pd_user_history" class="product_details_table">
@@ -230,13 +230,13 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 
 						<?php else : ?>
 
-						<div><p class="edd-no-purchases"><?php _e( 'This user not made any purchases', 'edd-purchase-details' ); ?></p></div>
+						<div><p class="edd-no-purchases"><?php _e( 'This user hasn\'t purchased anything!', 'edd-purchase-details' ); ?></p></div>
 								<?php
 						endif;
 
 					} else {
 						?>
-						<div><p class="edd-no-purchases"><?php _e( 'This user not made any purchases', 'edd-purchase-details' ); ?></p></div>
+						<div><p class="edd-no-purchases"><?php _e( 'This user hasn\'t purchased anything!', 'edd-purchase-details' ); ?></p></div>
 						<?php
 					}
 				} else {
@@ -252,7 +252,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 		}
 
 		/**
-		 * Display the Product History  .
+		 * Display the Product History.
 		 *
 		 * @since 0.0.1
 		 * @param  Int $payment_id   View history by payment_id.
@@ -267,7 +267,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 					$color = ( 'inherit' == $color ) ? '' : $color;
 
 					?>
-						<p><a href="<?php echo esc_url( remove_query_arg( array( 'action', 'payment_id' ) ) ); ?>" class="edd-manage-license-back edd-submit button <?php echo esc_attr( $color ); ?>"><?php _e( 'Go back', 'edd-purchase-details' ); ?></a></p>
+						<p><a href="<?php echo esc_url( remove_query_arg( array( 'action', 'payment_id' ) ) ); ?>" class="edd-view-license-back edd-submit button <?php echo esc_attr( $color ); ?>"><?php _e( 'Go back', 'edd-purchase-details' ); ?></a></p>
 						<?php
 						if ( function_exists( 'edd_software_licensing' ) ) {
 							if ( isset( $payment_id ) ) {
@@ -279,13 +279,13 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 										<table id="edd_user_history" class="edd-table">
 											<thead>
 												<tr class="edd_purchase_row">
-									<?php do_action( 'edd_download_history_header_start' ); ?>
+									<?php do_action( 'edd_pd_download_history_header_start' ); ?>
 												<th class=" edd_purchase_amount"><?php _e( 'Item', 'edd-purchase-details' ); ?></th>
 												<th class="edd_purchase_details"><?php _e( 'Key', 'edd-purchase-details' ); ?></th>
 												<th class="edd_license_key"><?php _e( 'Status', 'edd-purchase-details' ); ?></th>
 												<th class="edd_license_key"><?php _e( 'Activations', 'edd-purchase-details' ); ?></th>
 												<th class="edd_purchase_date"><?php _e( 'Expiration', 'edd-purchase-details' ); ?></th>
-									<?php do_action( 'edd_download_history_header_end' ); ?>
+									<?php do_action( 'edd_pd_download_history_header_end' ); ?>
 												</tr>
 											</thead>
 											<tbody>
@@ -293,7 +293,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 									foreach ( $child_keys as $child_key ) {
 										?>
 													<tr class="edd_sl_license_row">
-										<?php do_action( 'edd_download_history_row_start', $child_key->ID ); ?>
+										<?php do_action( 'edd_pd_download_history_row_start', $child_key->ID ); ?>
 														<td class="edd_sl_item"><?php echo $child_key->download->post_title; ?></td>
 														<td class="edd_sl_key"> <?php echo  $child_key->key; ?></td>
 														<td class="edd_sl_status"> <?php echo $child_key->status; ?> </td>
@@ -307,7 +307,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 										}
 										?>
 														</td> 
-										<?php do_action( 'edd_download_history_row_end', $child_key->ID ); ?>
+										<?php do_action( 'edd_pd_download_history_row_end', $child_key->ID ); ?>
 													</tr>
 								<?php	} ?>
 											</tbody>

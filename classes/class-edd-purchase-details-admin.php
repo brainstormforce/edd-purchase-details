@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin  loader file.
+ * Admin loader file.
  *
  * @package EDD Purchase details
  */
@@ -56,7 +56,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Admin' ) ) {
 		 * @since 0.0.1
 		 */
 		function save_access_payment_history() {
-			register_setting( 'options_access_payment_history', 'user_access' );
+			register_setting( 'options_access_payment_history', 'edd_pd_user_access' );
 		}
 	}
 }
