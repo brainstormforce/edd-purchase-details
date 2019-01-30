@@ -2,7 +2,7 @@
 /**
  * Admin loader file.
  *
- * @package EDD Purchase details
+ * @package EDD-PD
  */
 
 // Block direct access to the file.

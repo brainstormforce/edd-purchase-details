@@ -2,7 +2,7 @@
 /**
  * EDD purchase details Loader class.
  *
- * @package EDDPD
+ * @package EDD-PD
  */
 
 // Block direct access to the file.
