@@ -122,7 +122,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 
 			if ( ! empty( $_REQUEST['edd_pd_nonce_custom_form'] ) ) {
 				if ( wp_verify_nonce( $_REQUEST['edd_pd_nonce_custom_form'], 'edd_pd_handle_custom_form' ) ) {
-					if ( isset( $_GET['user_email'] ) ) {
+					if ( is_email( $_GET['user_email'] ) ) {
 						$this->view_product_details( sanitize_email( $_GET['user_email'] ) );
 					}
 				}
@@ -204,14 +204,14 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 										?>
 										<tr class="edd_purchase_row">
 											<?php do_action( 'access_to_purchase_details_row_start', $payment->ID, $payment->payment_meta ); ?>
-											<td class="edd_purchase_id">#<?php echo $purchase->number; ?></td>
+											<td class="edd_purchase_id">#<?php echo esc_attr( $purchase->number ); ?></td>
 											<td class="edd_purchase_date"><?php echo date_i18n( get_option( 'date_format' ), strtotime( $purchase->date ) ); ?></td>
-											<td class="edd_purchase_products"><?php echo  $purchase->cart_details[0]['name']; ?></span>
+											<td class="edd_purchase_products"><?php echo esc_html( $purchase->cart_details[0]['name'] ); ?></span>
 											</td>
 											<td class="edd_purchase_amount"><?php echo edd_currency_filter( edd_format_amount( $purchase->total ) ); ?></span>
 											</td>
 											<td class="edd_purchase_details">
-													<?php echo $purchase->status_nicename; ?>
+													<?php echo esc_attr( $purchase->status_nicename ); ?>
 											</td>
 											<td class="edd_purchase_key">
 											<?php
@@ -309,14 +309,14 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 									?>
 												<tr class="edd_sl_license_row">
 									<?php do_action( 'edd_pd_download_history_row_start', $child_key->ID ); ?>
-													<td class="edd_sl_item"><?php echo $child_key->download->post_title; ?></td>
-													<td class="edd_sl_key"> <?php echo  $child_key->key; ?></td>
-													<td class="edd_sl_status"> <?php echo $child_key->status; ?> </td>
-													<td class="edd_sl_limit"><?php echo $child_key->activation_count; ?> / <?php echo$child_key->activation_limit; ?></td>
+													<td class="edd_sl_item"><?php echo esc_html( $child_key->download->post_title ); ?></td>
+													<td class="edd_sl_key"> <?php echo esc_attr( $child_key->key ); ?></td>
+													<td class="edd_sl_status"> <?php echo esc_attr( $child_key->status ); ?> </td>
+													<td class="edd_sl_limit"><?php echo esc_attr( $child_key->activation_count ); ?> / <?php echo  esc_attr( $child_key->activation_limit ); ?></td>
 													<td class="edd_sl_expiration">
 									<?php
 									if ( 0 == $child_key->expiration ) {
-										echo  $child_key->expiration;
+										echo esc_attr( $child_key->expiration );
 									} else {
 										echo  date_i18n( 'F j, Y', $child_key->expiration );
 									}
