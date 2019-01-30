@@ -158,13 +158,26 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 		 */
 		function view_product_details( $email ) {
 
-			if ( is_user_logged_in() ) {
+			if ( ! is_user_logged_in() ) {
+				?>
+				<div><p class="edd-pd-no-login"><?php _e( ' You are not logged in. Please log in and try again.', 'edd-purchase-details' ); ?></p></div>
+				<?php
 
-				if ( $this->check_valid_user() ) {
+			} else {
 
+				if ( ! $this->check_valid_user() ) {
+					?>
+					<div><p class="edd-pd-no-permission"><?php _e( 'You do not have permission to access this page', 'edd-purchase-details' ); ?></p></div>
+					<?php
+
+				} else {
 					$customer_details = get_user_by( 'email', $email );
 
-					if ( ! empty( $customer_details ) ) {
+					if ( empty( $customer_details ) ) {
+						?>
+							<div><p class="edd-no-email"><?php _e( 'The email you have entered does not exist. ', 'edd-purchase-details' ); ?></p></div>
+						<?php
+					} else {
 						$payment_ids = edd_get_users_purchases( $customer_details->ID, 50, true, 'any' );
 						if ( $payment_ids ) :
 							do_action( 'access_to_purchase_before_purchase_history', $payment_ids );
@@ -233,21 +246,8 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 						<div><p class="edd-no-purchases"><?php _e( 'This user hasn\'t purchased anything!', 'edd-purchase-details' ); ?></p></div>
 								<?php
 						endif;
-
-					} else {
-						?>
-						<div><p class="edd-no-purchases"><?php _e( 'This user hasn\'t purchased anything!', 'edd-purchase-details' ); ?></p></div>
-						<?php
 					}
-				} else {
-					?>
-					<div><p class="edd-pd-no-permission"><?php _e( 'You do not have permission to access this page', 'edd-purchase-details' ); ?></p></div>
-					<?php
 				}
-			} else {
-				?>
-				<div><p class="edd-pd-no-login"><?php _e( ' You are not logged in. Please log in and try again.', 'edd-purchase-details' ); ?></p></div>
-				<?php
 			}
 		}
 
@@ -256,89 +256,86 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 		 *
 		 * @since 0.0.1
 		 * @param  Int $payment_id   View history by payment_id.
-		 * @return void
+		 * @return void|bool
 		 */
 		function view_history( $payment_id ) {
 
-			if ( is_user_logged_in() ) {
-
-				if ( $this->check_valid_user() ) {
-					$color = edd_get_option( 'checkout_color', 'gray' );
-					$color = ( 'inherit' == $color ) ? '' : $color;
-
-					?>
-						<p><a href="<?php echo esc_url( remove_query_arg( array( 'action', 'payment_id' ) ) ); ?>" class="edd-view-license-back edd-submit button <?php echo esc_attr( $color ); ?>"><?php _e( 'Go back', 'edd-purchase-details' ); ?></a></p>
-						<?php
-						if ( function_exists( 'edd_software_licensing' ) ) {
-							if ( isset( $payment_id ) ) {
-								$child_keys = edd_software_licensing()->get_licenses_of_purchase( $payment_id );
-								if ( ! empty( $child_keys ) ) {
-									?>
-									<div class="entry-content clear" itemprop="text">
-									<?php do_action( 'edd_before_download_history' ); ?>
-										<table id="edd_user_history" class="edd-table">
-											<thead>
-												<tr class="edd_purchase_row">
-									<?php do_action( 'edd_pd_download_history_header_start' ); ?>
-												<th class=" edd_purchase_amount"><?php _e( 'Item', 'edd-purchase-details' ); ?></th>
-												<th class="edd_purchase_details"><?php _e( 'Key', 'edd-purchase-details' ); ?></th>
-												<th class="edd_license_key"><?php _e( 'Status', 'edd-purchase-details' ); ?></th>
-												<th class="edd_license_key"><?php _e( 'Activations', 'edd-purchase-details' ); ?></th>
-												<th class="edd_purchase_date"><?php _e( 'Expiration', 'edd-purchase-details' ); ?></th>
-									<?php do_action( 'edd_pd_download_history_header_end' ); ?>
-												</tr>
-											</thead>
-											<tbody>
-									<?php
-									foreach ( $child_keys as $child_key ) {
-										?>
-													<tr class="edd_sl_license_row">
-										<?php do_action( 'edd_pd_download_history_row_start', $child_key->ID ); ?>
-														<td class="edd_sl_item"><?php echo $child_key->download->post_title; ?></td>
-														<td class="edd_sl_key"> <?php echo  $child_key->key; ?></td>
-														<td class="edd_sl_status"> <?php echo $child_key->status; ?> </td>
-														<td class="edd_sl_limit"><?php echo $child_key->activation_count; ?> / <?php echo$child_key->activation_limit; ?></td>
-														<td class="edd_sl_expiration">
-										<?php
-										if ( 0 == $child_key->expiration ) {
-											echo  $child_key->expiration;
-										} else {
-											echo  date_i18n( 'F j, Y', $child_key->expiration );
-										}
-										?>
-														</td> 
-										<?php do_action( 'edd_pd_download_history_row_end', $child_key->ID ); ?>
-													</tr>
-								<?php	} ?>
-											</tbody>
-										</table>
-									</div>
-
-									<?php
-
-								} else {
-									?>
-									<div><p class="edd-invalid-request"><?php _e( 'Invalid Request.', 'edd-purchase-details' ); ?></p></div>	
-									<?php
-								}
-							}
-						} else {
-							?>
-								<div><p class="edd-invalid-request"><?php _e( 'Invalid Request.', 'edd-purchase-details' ); ?></p></div>	
-							<?php
-						}
-				} else {
+			if ( ! is_user_logged_in() ) {
+				?>
+				<div><p class="edd-pd-no-login"><?php _e( ' You are not logged in. Please log in and try again.', 'edd-purchase-details' ); ?></p></div>
+				<?php
+			} else {
+				if ( ! $this->check_valid_user() ) {
 
 					?>
 					<div><p class="edd-pd-no-permission"><?php _e( 'You do not have permission to access this page', 'edd-purchase-details' ); ?></p></div>
 					<?php
-				}
-			} else {
 
-				?>
-				<div><p class="edd-pd-no-login"><?php _e( ' You are not logged in. Please log in and try again.', 'edd-purchase-details' ); ?></p></div>
-				<?php
+				} else {
+
+					$color = edd_get_option( 'checkout_color', 'gray' );
+					$color = ( 'inherit' == $color ) ? '' : $color;
+
+					?>
+					<p><a href="<?php echo esc_url( remove_query_arg( array( 'action', 'payment_id' ) ) ); ?>" class="edd-view-license-back edd-submit button <?php echo esc_attr( $color ); ?>"><?php _e( 'Go back', 'edd-purchase-details' ); ?></a></p>
+					<?php
+					if ( ! function_exists( 'edd_software_licensing' ) ) {
+						return false;
+					} else {
+						if ( ! isset( $payment_id ) ) {
+							echo $payment_id;
+
+						} else {
+							$child_keys = edd_software_licensing()->get_licenses_of_purchase( $payment_id );
+							if ( ! empty( $child_keys ) ) {
+								?>
+								<div class="entry-content clear" itemprop="text">
+								<?php do_action( 'edd_before_download_history' ); ?>
+									<table id="edd_user_history" class="edd-table">
+										<thead>
+											<tr class="edd_purchase_row">
+								<?php do_action( 'edd_pd_download_history_header_start' ); ?>
+											<th class=" edd_purchase_amount"><?php _e( 'Item', 'edd-purchase-details' ); ?></th>
+											<th class="edd_purchase_details"><?php _e( 'Key', 'edd-purchase-details' ); ?></th>
+											<th class="edd_license_key"><?php _e( 'Status', 'edd-purchase-details' ); ?></th>
+											<th class="edd_license_key"><?php _e( 'Activations', 'edd-purchase-details' ); ?></th>
+											<th class="edd_purchase_date"><?php _e( 'Expiration', 'edd-purchase-details' ); ?></th>
+								<?php do_action( 'edd_pd_download_history_header_end' ); ?>
+											</tr>
+										</thead>
+										<tbody>
+								<?php
+								foreach ( $child_keys as $child_key ) {
+									?>
+												<tr class="edd_sl_license_row">
+									<?php do_action( 'edd_pd_download_history_row_start', $child_key->ID ); ?>
+													<td class="edd_sl_item"><?php echo $child_key->download->post_title; ?></td>
+													<td class="edd_sl_key"> <?php echo  $child_key->key; ?></td>
+													<td class="edd_sl_status"> <?php echo $child_key->status; ?> </td>
+													<td class="edd_sl_limit"><?php echo $child_key->activation_count; ?> / <?php echo$child_key->activation_limit; ?></td>
+													<td class="edd_sl_expiration">
+									<?php
+									if ( 0 == $child_key->expiration ) {
+										echo  $child_key->expiration;
+									} else {
+										echo  date_i18n( 'F j, Y', $child_key->expiration );
+									}
+									?>
+													</td> 
+									<?php do_action( 'edd_pd_download_history_row_end', $child_key->ID ); ?>
+												</tr>
+							<?php	} ?>
+										</tbody>
+									</table>
+								</div>
+
+								<?php
+							}
+						}
+					}
+				}
 			}
+
 		}
 
 	}

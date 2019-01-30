@@ -40,19 +40,12 @@
   
 
 /* Error display Messages*/
-.edd-pd-no-login {
+.edd-pd-no-login,.edd-pd-no-permission,.edd-invalid-request{
   color:red;
 }
-.edd-pd-no-permission {
- color:red;
-}
-.edd-invalid-request {
- color:red;
-}
-.edd-no-purchases {
+.edd-no-purchases,.edd-no-email{
  color:green;
 }
-
 
 @media only screen and (max-width: 768px) {
 .product_details_table {
