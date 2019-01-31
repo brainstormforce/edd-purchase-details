@@ -1,7 +1,6 @@
 <?php
 /**
  * Plugin Name: Easy Digital Downloads - Purchase Details
- * Plugin URI: https://www.brainstormforce.com
  * Author: Brainstorm Force
  * Author URI: https://www.brainstormforce.com
  * Version: 1.0.0
