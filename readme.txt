@@ -1,5 +1,5 @@
 === Easy Digital Downloads - Purchase Details ===
-Contributors: Brainstormforce
+Contributors: brainstormforce
 Tags: digital downloads, download, downloads, e-store, purchase
 Donate link: https://www.paypal.me/BrainstormForce
 Requires at least: 4.4
