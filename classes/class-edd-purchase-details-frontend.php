@@ -182,7 +182,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 							do_action( 'access_to_purchase_before_purchase_history', $payment_ids );
 							?>
 							<div class="entry-content epf-product-details clear">
-								<table id="epf-product-details" class="edd-table">
+								<table id="epf-product-details" class="epf-table">
 									<thead>
 										<tr class="edd-purchase-row">
 											<?php do_action( 'access_to_purchase_details_header_before' ); ?>
@@ -290,7 +290,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 								?>
 								<div class="entry-content epf-product-details clear" itemprop="text">
 								<?php do_action( 'edd_before_download_history' ); ?>
-									<table id="epf_user_history" class="edd-table">
+									<table id="epf_user_history" class="epf-table">
 										<thead>
 											<tr class="edd_purchase_row">
 								<?php do_action( 'edd_pd_download_history_header_start' ); ?>
