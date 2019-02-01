@@ -41,10 +41,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 		?>
 		</div>
 	</form>
-
+</div>
 <div class="clear"></div>
+<hr>
 <div class="epf-user-guides">
-	<hr>
 	<h3> <?php _e( 'Getting Started', 'edd-purchase-details' ); ?> </h3>
 	<fieldset>
 		<legend class="screen-reader-text"><span>Note : </span></legend>
