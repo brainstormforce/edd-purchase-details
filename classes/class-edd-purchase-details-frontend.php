@@ -175,7 +175,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 
 					if ( empty( $customer_details ) ) {
 						?>
-							<div><p class="epf-errorno-email"><?php _e( 'The email you have entered does not exist. ', 'edd-purchase-details' ); ?></p></div>
+							<div><p class="epf-error-no-email"><?php _e( 'The email you have entered does not exist. ', 'edd-purchase-details' ); ?></p></div>
 						<?php
 					} else {
 						$payment_ids = edd_get_users_purchases( $customer_details->ID, 50, true, 'any' );

@@ -14,7 +14,7 @@ input[type="submit"].epf-seach-button {
     width: 20%;
 }
 
-.epf-product-details-table{
+.epf-product-details{
   margin-top: 5%;
 }
   
@@ -28,7 +28,7 @@ input[type="submit"].epf-seach-button {
 }
 
 @media only screen and (max-width: 768px) {
-.epf-product-details-table {
+.epf-product-details {
 overflow: hidden;
 overflow-x: scroll;
 display:block;
