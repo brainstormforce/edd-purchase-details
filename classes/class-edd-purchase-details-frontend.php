@@ -181,7 +181,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 						if ( $payment_ids ) :
 							do_action( 'access_to_purchase_history_start', $payment_ids );
 							?>
-							<div class="entry-content epf-product-details clear">
+							<div class="entry-content epf-purchase-details clear">
 								<table class="edd-table">
 									<thead>
 										<tr class="edd-purchase-row">
@@ -288,7 +288,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 							$child_keys = edd_software_licensing()->get_licenses_of_purchase( $payment_id );
 							if ( ! empty( $child_keys ) ) {
 								?>
-								<div class="entry-content epf-product-details clear" itemprop="text">
+								<div class="entry-content epf-purchase-history clear" itemprop="text">
 								<?php do_action( 'epf_before_download_history' ); ?>
 									<table class="edd-table">
 										<thead>

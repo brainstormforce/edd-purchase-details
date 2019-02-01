@@ -14,7 +14,7 @@ input[type="submit"].epf-search-button {
     width: 20%;
 }
 
-.epf-product-details{
+.epf-purchase-details , .epf-purchase-history{
 	margin-top: 5%;
 	overflow: hidden;
 	overflow-x: auto;
