@@ -179,10 +179,10 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 					} else {
 						$payment_ids = edd_get_users_purchases( $customer_details->ID, 50, true, 'any' );
 						if ( $payment_ids ) :
-							do_action( 'access_to_purchase_before_purchase_history', $payment_ids );
+							do_action( 'access_to_purchase_history_start', $payment_ids );
 							?>
 							<div class="entry-content epf-product-details clear">
-								<table id="epf-product-details" class="epf-table">
+								<table class="edd-table">
 									<thead>
 										<tr class="edd-purchase-row">
 											<?php do_action( 'access_to_purchase_details_header_before' ); ?>
@@ -231,7 +231,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 											} else {
 												echo ' - ';
 											}
-											do_action( 'access_to_purchase_details_row_end', $purchase->ID, $payment->payment_meta );
+											do_action( 'access_to_purchase_history_end', $purchase->ID, $payment->payment_meta );
 											?>
 										</td>
 									</tr>
@@ -289,17 +289,17 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 							if ( ! empty( $child_keys ) ) {
 								?>
 								<div class="entry-content epf-product-details clear" itemprop="text">
-								<?php do_action( 'edd_before_download_history' ); ?>
-									<table id="epf_user_history" class="epf-table">
+								<?php do_action( 'epf_before_download_history' ); ?>
+									<table class="edd-table">
 										<thead>
 											<tr class="edd_purchase_row">
-								<?php do_action( 'edd_pd_download_history_header_start' ); ?>
+								<?php do_action( 'epf_download_history_header_start' ); ?>
 											<th class=" edd_purchase_amount"><?php _e( 'Item', 'edd-purchase-details' ); ?></th>
 											<th class="edd_purchase_details"><?php _e( 'Key', 'edd-purchase-details' ); ?></th>
 											<th class="edd_license_key"><?php _e( 'Status', 'edd-purchase-details' ); ?></th>
 											<th class="edd_license_key"><?php _e( 'Activations', 'edd-purchase-details' ); ?></th>
 											<th class="edd_purchase_date"><?php _e( 'Expiration', 'edd-purchase-details' ); ?></th>
-								<?php do_action( 'edd_pd_download_history_header_end' ); ?>
+								<?php do_action( 'epf_download_history_header_end' ); ?>
 											</tr>
 										</thead>
 										<tbody>
@@ -307,7 +307,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 								foreach ( $child_keys as $child_key ) {
 									?>
 												<tr class="edd_sl_license_row">
-									<?php do_action( 'edd_pd_download_history_row_start', $child_key->ID ); ?>
+									<?php do_action( 'epf_download_history_row_start', $child_key->ID ); ?>
 													<td class="edd_sl_item"><?php echo esc_html( $child_key->download->post_title ); ?></td>
 													<td class="edd_sl_key"> <?php echo esc_attr( $child_key->key ); ?></td>
 													<td class="edd_sl_status"> <?php echo esc_attr( $child_key->status ); ?> </td>
@@ -321,13 +321,14 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 									}
 									?>
 													</td> 
-									<?php do_action( 'edd_pd_download_history_row_end', $child_key->ID ); ?>
+									<?php do_action( 'epf_download_history_row_end', $child_key->ID ); ?>
 												</tr>
 							<?php	} ?>
 										</tbody>
 									</table>
+									<?php do_action( 'epf_after_download_history' ); ?>
 								</div>
-
+	                     
 								<?php
 							}
 						}
