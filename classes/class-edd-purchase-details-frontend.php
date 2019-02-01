@@ -182,7 +182,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 							do_action( 'access_to_purchase_before_purchase_history', $payment_ids );
 							?>
 							<div class="entry-content epf-product-details clear">
-								<table id="edd_user_history" class="edd-table">
+								<table id="epf-product-details" class="edd-table">
 									<thead>
 										<tr class="edd-purchase-row">
 											<?php do_action( 'access_to_purchase_details_header_before' ); ?>
@@ -288,9 +288,9 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 							$child_keys = edd_software_licensing()->get_licenses_of_purchase( $payment_id );
 							if ( ! empty( $child_keys ) ) {
 								?>
-								<div class="entry-content clear" itemprop="text">
+								<div class="entry-content epf-product-details clear" itemprop="text">
 								<?php do_action( 'edd_before_download_history' ); ?>
-									<table id="edd_user_history" class="edd-table">
+									<table id="epf_user_history" class="edd-table">
 										<thead>
 											<tr class="edd_purchase_row">
 								<?php do_action( 'edd_pd_download_history_header_start' ); ?>
