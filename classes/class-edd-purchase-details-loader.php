@@ -41,7 +41,7 @@ if ( ! class_exists( 'Edd_Purchase_Details_Loader' ) ) {
 		 *  Constructor
 		 */
 		public function __construct() {
-			add_filter( 'plugins_loaded', array( $this, 'filter_plugins_loaded' ), 9999, 0 );
+			add_filter( 'plugins_loaded', array( $this, 'epf_filter_plugins_loaded' ), 9999, 0 );
 		}
 
 		/**
@@ -51,13 +51,13 @@ if ( ! class_exists( 'Edd_Purchase_Details_Loader' ) ) {
 		 *
 		 * @return void
 		 */
-		public function filter_plugins_loaded() {
+		public function epf_filter_plugins_loaded() {
 			if ( class_exists( 'Easy_Digital_Downloads' ) ) {
 					require_once EDD_PD . 'classes/class-edd-purchase-details-frontend.php';
 					require_once EDD_PD . 'classes/class-edd-purchase-details-admin.php';
-					add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
+					add_action( 'plugins_loaded', array( $this, 'epf_fails_to_load' ) );
 			} else {
-				add_action( 'admin_notices', array( $this, 'fails_to_load' ) );
+				add_action( 'admin_notices', array( $this, 'epf_fails_to_load' ) );
 			}
 		}
 
@@ -68,7 +68,7 @@ if ( ! class_exists( 'Edd_Purchase_Details_Loader' ) ) {
 		 *
 		 * @return void
 		 */
-		public  function fails_to_load() {
+		public  function epf_fails_to_load() {
 			$class = 'notice notice-error';
 			/* translators: %s: html tags */
 			$message = sprintf( __( 'The %1$s EDD Purchase Details %2$s plugin requires %1$s Easy Digital Downloads %2$s plugin installed & activated.', 'edd-purchase-details' ), '<strong>', '</strong>' );
@@ -86,7 +86,7 @@ if ( ! class_exists( 'Edd_Purchase_Details_Loader' ) ) {
 		 * @since  0.0.1
 		 * @return void
 		 */
-		public function load_textdomain() {
+		public function epf_load_textdomain() {
 			// Default languages directory for edd-purchase-details.
 			$lang_dir = EDD_PD_PLUGIN_FILE . 'languages/';
 

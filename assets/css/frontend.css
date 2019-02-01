@@ -1,54 +1,34 @@
 /**
- * Plugin Name: Easy Digital Downloads - Access to Purchase Details
- * Plugin URI: https://www.brainstormforce.com
- * Author: Brainstorm Force
- * Author URI: https://www.brainstormforce.com
- * Version: 1.0.0
+/* forntend.css
  */
-
-.edd_pd_seach_textbox{
-  padding: 10px;
-  border: 1px solid grey;
-  float: left;
-  width: 80%;
-  background: #f1f1f1;
+input[type="email"].epf-seach-textbox, 
+input[type="submit"].epf-seach-button {
+    font-size: 1em;
+    padding: 10px 10px;
+}
+input[type="email"].epf-seach-textbox {
+    width: calc(79% - 5px);
+    margin-right: 5px;
+}
+input[type="submit"].epf-seach-button {
+    width: 20%;
 }
 
-.edd_pd_seach_Button{
-  float: left;
-  width: 20%;
-  padding: 10px;
-  background: #2196F3;
-  color: white;
-  border: 1px solid grey;
-  border-left: none;
-  cursor: pointer;
-}
-
-.edd_pd_seach_Button:hover {
-  background: #0b7dda;
-}
-
-.edd_pd_seach_Button::after {
-  content: "";
-  clear: both;
-  display: table;
-}
-.product_details_table{
+.epf-product-details-table{
   margin-top: 5%;
 }
   
 
 /* Error display Messages*/
-.edd-pd-no-login,.edd-pd-no-permission,.edd-invalid-request{
+.epf-error-no-login,.epf-error-no-permission,.epf-error-invalid-request{
   color:red;
 }
-.edd-no-purchases,.edd-no-email{
+.epf-error-no-purchases,.epf-error-no-email{
  color:green;
 }
 
 @media only screen and (max-width: 768px) {
-.product_details_table {
+.epf-product-details-table {
 overflow: hidden;
 overflow-x: scroll;
 display:block;
