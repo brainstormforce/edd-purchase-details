@@ -1,16 +1,17 @@
 /**
 /* forntend.css
  */
-input[type="email"].epf-seach-textbox, 
-input[type="submit"].epf-seach-button {
+input[type="email"].epf-search-textbox, 
+input[type="submit"].epf-search-button {
     font-size: 1em;
     padding: 10px 10px;
 }
-input[type="email"].epf-seach-textbox {
-    width: calc(79% - 5px);
-    margin-right: 5px;
+input[type="email"].epf-search-textbox {
+    /*width: calc(79% - 5px);
+    margin-right: 5px;*/
+     width: 80%;
 }
-input[type="submit"].epf-seach-button {
+input[type="submit"].epf-search-button {
     width: 20%;
 }
 
@@ -28,7 +29,7 @@ input[type="submit"].epf-seach-button {
 }
 
 @media only screen and (max-width: 768px) {
-.epf-product-details {
+.epf-product-details{
 overflow: hidden;
 overflow-x: scroll;
 display:block;
