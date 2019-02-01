@@ -71,8 +71,8 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 		function epf_form_render_get_customer_data() {
 
 			$value = ( isset( $_GET['epf_customer_email'] ) ? sanitize_email( $_GET['epf_customer_email'] ) : '' ); ?>
-			<div class="epf-seach">
-				<form  class="epf-seach-form" action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ); ?>" method="get">
+			<div class="epf-search">
+				<form  class="epf-search-form" action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ); ?>" method="get">
 					<?php wp_nonce_field( 'epf_search_form', 'epf_nonce_search_form' ); ?>
 					<input type="email" class="epf-search-textbox" name="epf_customer_email" placeholder=" <?php _e( 'Enter customer email address', 'edd-purchase-details' ); ?>" value="<?php echo $value; ?>" required/><!--
 					--><input type="submit" class="epf-search-button" value="<?php _e( 'Search', 'edd-purchase-details' ); ?> "  />
