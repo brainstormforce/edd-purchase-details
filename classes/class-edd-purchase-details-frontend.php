@@ -100,16 +100,13 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 		 * @return content
 		 */
 		function epf_purchase_history( $content ) {
-
-			if ( isset( $_GET['action'] ) ) {
-				if ( ! empty( $_GET['action'] ) || 'epf_view_history' == $_GET['action'] ) {
-					ob_start();
-					$this->epf_view_history( intval( $_GET['payment_id'] ) );
-					$content = ob_get_clean();
-				}
-			}
+			if( isset( $_GET['payment_id'] ) && 'epf_view_history' == $_GET['action'] ) {
+				ob_start();
+				$this->epf_view_history( intval( $_GET['payment_id'] ) );
+				$content = ob_get_clean();
+			} 
 			return $content;
-		}
+       }
 
 
 		/**
