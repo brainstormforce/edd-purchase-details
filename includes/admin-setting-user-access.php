@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<h1><?php _e( 'Access Payment History ', 'edd-purchase-details' ); ?> </h1>
 	<h3><?php _e( 'Manage which user roles can access purchase details information.', 'edd-purchase-details' ); ?></h3>
 	<form action="options.php" method="post" class="edd_pd_setting_form" >
-		<div class="edd_pd_save_setting">
+		<div class="epf_save_setting">
 		<?php
 		$roles = get_option( 'edd_pd_user_access' );
 		settings_fields( 'options_access_payment_history' );
@@ -41,9 +41,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 		?>
 		</div>
 	</form>
-
+</div>
 <div class="clear"></div>
-	<hr>
+<hr>
+<div class="epf-user-guides">
 	<h3> <?php _e( 'Getting Started', 'edd-purchase-details' ); ?> </h3>
 	<fieldset>
 		<legend class="screen-reader-text"><span>Note : </span></legend>
