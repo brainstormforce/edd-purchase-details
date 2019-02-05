@@ -3,7 +3,7 @@
  * Plugin Name: Easy Digital Downloads - Purchase Details
  * Author: Brainstorm Force
  * Author URI: https://www.brainstormforce.com
- * Version: 1.0.0
+ * Version: 1.0.1
  * Description: Easy Digital Downloads Access to Purchase Details
  * Text Domain: edd-purchase-details
  *
@@ -18,11 +18,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Define constants.
  */
-define( 'EDD_PD_VER', '1.0.0' );
+define( 'EDD_PD_VER', '1.0.1' );
 define( 'EDD_PD_FILE', __FILE__ );
 define( 'EDD_PD', plugin_dir_path( __FILE__ ) );
 define( 'EDD_PD_URL', plugin_dir_url( __FILE__ ) );
+
 /**
- * Extensions
+ * Plugin loader
  */
 require_once 'classes/class-edd-purchase-details-loader.php';

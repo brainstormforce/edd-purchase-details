@@ -2,10 +2,10 @@
 # This file is distributed under the same license as the Easy Digital Downloads - Purchase Details package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Easy Digital Downloads - Purchase Details 1.0.0\n"
+"Project-Id-Version: Easy Digital Downloads - Purchase Details 1.0.1\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/edd-purchase-details\n"
-"POT-Creation-Date: 2019-01-29 06:46:29+00:00\n"
+"POT-Creation-Date: 2019-02-05 05:01:20+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -33,7 +33,7 @@ msgstr ""
 msgid "Access Payment History"
 msgstr ""
 
-#: classes/class-edd-purchase-details-frontend.php:76
+#: classes/class-edd-purchase-details-frontend.php:77
 msgid "Enter customer email address"
 msgstr ""
 
@@ -41,73 +41,71 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: classes/class-edd-purchase-details-frontend.php:177
-msgid "ID"
-msgstr ""
-
-#: classes/class-edd-purchase-details-frontend.php:178
-msgid "Date"
-msgstr ""
-
-#: classes/class-edd-purchase-details-frontend.php:179
-msgid "Products"
-msgstr ""
-
-#: classes/class-edd-purchase-details-frontend.php:180
-msgid "Amount"
-msgstr ""
-
-#: classes/class-edd-purchase-details-frontend.php:181
-#: classes/class-edd-purchase-details-frontend.php:285
-msgid "Status"
-msgstr ""
-
-#: classes/class-edd-purchase-details-frontend.php:182
-msgid "License Keys"
-msgstr ""
-
-#: classes/class-edd-purchase-details-frontend.php:215
-msgid "View Licenses"
-msgstr ""
-
-#: classes/class-edd-purchase-details-frontend.php:233
-#: classes/class-edd-purchase-details-frontend.php:239
-msgid "This user hasn't purchased anything!"
-msgstr ""
-
-#: classes/class-edd-purchase-details-frontend.php:244
-#: classes/class-edd-purchase-details-frontend.php:333
-msgid "You do not have permission to access this page"
-msgstr ""
-
-#: classes/class-edd-purchase-details-frontend.php:249
-#: classes/class-edd-purchase-details-frontend.php:339
+#: classes/class-edd-purchase-details-frontend.php:159
+#: classes/class-edd-purchase-details-frontend.php:261
 msgid " You are not logged in. Please log in and try again."
 msgstr ""
 
-#: classes/class-edd-purchase-details-frontend.php:270
+#: classes/class-edd-purchase-details-frontend.php:166
+#: classes/class-edd-purchase-details-frontend.php:267
+msgid "You do not have permission to access purchase history!"
+msgstr ""
+
+#: classes/class-edd-purchase-details-frontend.php:174
+msgid "The email you have entered does not exist. "
+msgstr ""
+
+#: classes/class-edd-purchase-details-frontend.php:186
+msgid "ID"
+msgstr ""
+
+#: classes/class-edd-purchase-details-frontend.php:187
+msgid "Date"
+msgstr ""
+
+#: classes/class-edd-purchase-details-frontend.php:188
+msgid "Products"
+msgstr ""
+
+#: classes/class-edd-purchase-details-frontend.php:189
+msgid "Amount"
+msgstr ""
+
+#: classes/class-edd-purchase-details-frontend.php:190
+#: classes/class-edd-purchase-details-frontend.php:296
+msgid "Status"
+msgstr ""
+
+#: classes/class-edd-purchase-details-frontend.php:191
+msgid "License Keys"
+msgstr ""
+
+#: classes/class-edd-purchase-details-frontend.php:224
+msgid "View Licenses"
+msgstr ""
+
+#: classes/class-edd-purchase-details-frontend.php:242
+msgid "This user hasn't purchased anything!"
+msgstr ""
+
+#: classes/class-edd-purchase-details-frontend.php:276
 msgid "Go back"
 msgstr ""
 
-#: classes/class-edd-purchase-details-frontend.php:283
+#: classes/class-edd-purchase-details-frontend.php:294
 msgid "Item"
 msgstr ""
 
-#: classes/class-edd-purchase-details-frontend.php:284
+#: classes/class-edd-purchase-details-frontend.php:295
 msgid "Key"
 msgstr ""
 
-#: classes/class-edd-purchase-details-frontend.php:286
+#: classes/class-edd-purchase-details-frontend.php:297
 msgid "Activations"
 msgstr ""
 
-#: classes/class-edd-purchase-details-frontend.php:287
+#: classes/class-edd-purchase-details-frontend.php:298
 msgid "Expiration"
-msgstr ""
-
-#: classes/class-edd-purchase-details-frontend.php:321
-#: classes/class-edd-purchase-details-frontend.php:327
-msgid "Invalid Request."
 msgstr ""
 
 #: classes/class-edd-purchase-details-loader.php:74
@@ -125,20 +123,16 @@ msgstr ""
 msgid "Manage which user roles can access purchase details information."
 msgstr ""
 
-#: includes/admin-setting-user-access.php:47
+#: includes/admin-setting-user-access.php:48
 msgid "Getting Started"
 msgstr ""
 
-#: includes/admin-setting-user-access.php:50
+#: includes/admin-setting-user-access.php:51
 msgid "Copy this shortcode and paste it into your post or page"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
 msgid "Easy Digital Downloads - Purchase Details"
-msgstr ""
-
-#. Author URI of the plugin/theme
-msgid "https://www.brainstormforce.com"
 msgstr ""
 
 #. Description of the plugin/theme
@@ -147,4 +141,8 @@ msgstr ""
 
 #. Author of the plugin/theme
 msgid "Brainstorm Force"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://www.brainstormforce.com"
 msgstr ""

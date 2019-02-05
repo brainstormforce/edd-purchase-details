@@ -40,5 +40,11 @@ Access to purchase details of Easy Digital Downloads customers using an email ad
 
 == Changelog ==
 
+= 1.0.1 =
+
+- Improvement: Responsive Purchase History table. 
+- Improvement: Search form styling.
+- Fix: Conflict with Manage Site and Update Payment Method option. 
+
 = 1.0.0 =
 * Initial Release.

@@ -62,7 +62,7 @@ if ( ! class_exists( 'Edd_Purchase_Details_Loader' ) ) {
 		}
 
 		/**
-		 * Fires admin notice when Elementor is not installed and activated.
+		 * Fires admin notice when Easy digital downloads is not installed and active.
 		 *
 		 * @since 0.0.1
 		 *
@@ -76,7 +76,6 @@ if ( ! class_exists( 'Edd_Purchase_Details_Loader' ) ) {
 			printf( '<div class="%1$s"><p>%2$s</p>%3$s</div>', esc_attr( $class ), $message, '' );
 		}
 
-
 		/**
 		 * Load Edd Purchase Details
 		 * This will load the translation textdomain depending on the file priorities.
@@ -87,6 +86,7 @@ if ( ! class_exists( 'Edd_Purchase_Details_Loader' ) ) {
 		 * @return void
 		 */
 		public function epf_load_textdomain() {
+
 			// Default languages directory for edd-purchase-details.
 			$lang_dir = EDD_PD_PLUGIN_FILE . 'languages/';
 
@@ -130,8 +130,6 @@ if ( ! class_exists( 'Edd_Purchase_Details_Loader' ) ) {
 				load_plugin_textdomain( 'edd-purchase-details', false, $lang_dir );
 			}
 		}
-
-
 	}
 	Edd_Purchase_Details_Loader::get_instance();
 }

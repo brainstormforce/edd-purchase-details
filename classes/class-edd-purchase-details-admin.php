@@ -27,9 +27,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Admin' ) ) {
 			// Activation hook.
 			add_action( 'admin_init', array( $this, 'save_access_payment_history' ) );
 			add_action( 'admin_menu', array( $this, 'epf_add_submenu' ) );
-
 		}
-
 
 		/**
 		 * Add submenu under "Downloads" in dashbord
@@ -39,7 +37,6 @@ if ( ! class_exists( 'EDD_Purchase_Details_Admin' ) ) {
 		function epf_add_submenu() {
 			add_submenu_page( 'edit.php?post_type=download', __( ' Access Payment History', 'edd-purchase-details' ), __( 'Access Payment History', 'edd-purchase-details' ), 'manage_shop_settings', 'admin-setting-user-access', array( $this, 'setting_page' ) );
 		}
-
 
 		/**
 		 * Setting page render
@@ -60,4 +57,5 @@ if ( ! class_exists( 'EDD_Purchase_Details_Admin' ) ) {
 		}
 	}
 }
+
 $masterpage_obj = new EDD_Purchase_Details_Admin();

@@ -1,15 +1,17 @@
 /**
-/* forntend.css
+/* frontend.css
  */
 input[type="email"].epf-search-textbox, 
 input[type="submit"].epf-search-button {
     font-size: 1em;
     padding: 10px 10px;
 }
+
 input[type="email"].epf-search-textbox {
     width: calc(79% - 5px);
     margin-right: 5px;
 }
+
 input[type="submit"].epf-search-button {
     width: 20%;
 }
@@ -20,14 +22,12 @@ input[type="submit"].epf-search-button {
 	overflow-x: auto;
 	display:block;
 }
-  
 
 /* Error display Messages*/
 .epf-error-no-login,.epf-error-no-permission,.epf-error-invalid-request{
   color:red;
 }
+
 .epf-error-no-purchases,.epf-error-no-email{
  color:green;
 }
-
-
