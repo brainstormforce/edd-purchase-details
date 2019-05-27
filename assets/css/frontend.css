@@ -1,19 +1,30 @@
 /**
 /* frontend.css
  */
-input[type="email"].epf-search-textbox, 
-input[type="submit"].epf-search-button {
-    font-size: 1em;
-    padding: 10px 10px;
+
+.epf-search form.epf-search-form {
+	display: flex;
 }
 
-input[type="email"].epf-search-textbox {
-    width: calc(79% - 5px);
-    margin-right: 5px;
+input.epf-search-textbox,
+.epf-search form.epf-search-form .select {
+	margin-right: 10px;
 }
 
-input[type="submit"].epf-search-button {
-    width: 20%;
+input.epf-search-textbox, 
+input.epf-search-button {
+	font-size: 1em;
+	padding: 10px;
+}
+
+input.epf-search-textbox {
+	width: calc(60% - 5px);
+	height: 2.8em;
+}
+
+.epf-search form.epf-search-form .select,
+input.epf-search-button {
+  width: 20%;
 }
 
 .epf-purchase-details , .epf-purchase-history{
@@ -30,4 +41,20 @@ input[type="submit"].epf-search-button {
 
 .epf-error-no-purchases,.epf-error-no-email{
  color:green;
+}
+
+@media(max-width: 768px) {
+	form.epf-search-form {
+		display: block !important;
+	}
+	input.epf-search-textbox,
+		.epf-search form.epf-search-form .select,
+		input.epf-search-button {
+		width: 100%;
+		margin-bottom: 20px;
+	}
+
+	.epf-search form.epf-search-form .select .epf-select {
+		height: auto;
+	}
 }
