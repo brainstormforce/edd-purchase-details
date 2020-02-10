@@ -34,7 +34,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Admin' ) ) {
 		 *
 		 * @since 0.0.1
 		 */
-		function epf_add_submenu() {
+		public function epf_add_submenu() {
 			add_submenu_page( 'edit.php?post_type=download', __( ' Access Payment History', 'edd-purchase-details' ), __( 'Access Payment History', 'edd-purchase-details' ), 'manage_shop_settings', 'admin-setting-user-access', array( $this, 'setting_page' ) );
 		}
 
@@ -43,7 +43,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Admin' ) ) {
 		 *
 		 * @since 0.0.1
 		 */
-		function setting_page() {
+		public function setting_page() {
 			require_once EDD_PD . 'includes/admin-setting-user-access.php';
 		}
 
@@ -52,7 +52,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Admin' ) ) {
 		 *
 		 * @since 0.0.1
 		 */
-		function save_access_payment_history() {
+		public function save_access_payment_history() {
 			register_setting( 'options_access_payment_history', 'edd_pd_user_access' );
 		}
 	}
