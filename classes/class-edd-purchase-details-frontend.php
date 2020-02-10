@@ -308,13 +308,13 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 													<td class="edd_sl_item"><?php echo esc_html( $child_key->download->post_title ); ?></td>
 													<td class="edd_sl_key"> <?php echo esc_attr( $child_key->key ); ?></td>
 													<td class="edd_sl_status"> <?php echo esc_attr( $child_key->status ); ?> </td>
-													<td class="edd_sl_limit"><?php echo esc_attr( $child_key->activation_count ); ?> / <?php echo  esc_attr( $child_key->activation_limit ); ?></td>
+													<td class="edd_sl_limit"><?php echo esc_attr( $child_key->activation_count ); ?> / <?php echo esc_attr( $child_key->activation_limit ); ?></td>
 													<td class="edd_sl_expiration">
 									<?php
 									if ( 0 == $child_key->expiration ) {
 										echo esc_attr( $child_key->expiration );
 									} else {
-										echo  date_i18n( 'F j, Y', $child_key->expiration );
+										echo date_i18n( 'F j, Y', $child_key->expiration );
 									}
 									?>
 													</td> 
