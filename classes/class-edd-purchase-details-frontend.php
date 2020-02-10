@@ -68,18 +68,22 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 		 * @since 0.0.1
 		 * @return void
 		 */
-		function epf_form_render_get_customer_data() {
+		public function epf_form_render_get_customer_data() {
 
-			$value = ( isset( $_GET['epf_customer_email'] ) ? sanitize_email( $_GET['epf_customer_email'] ) : '' ); ?>
-			<div class="epf-search">
-				<form  class="epf-search-form" action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ); ?>" method="get">
-					<?php wp_nonce_field( 'epf_search_form', 'epf_nonce_search_form' ); ?>
-					<input type="email" class="epf-search-textbox" name="epf_customer_email" placeholder=" <?php _e( 'Enter customer email address', 'edd-purchase-details' ); ?>" value="<?php echo $value; ?>" required/><!--
-					--><input type="submit" class="epf-search-button" value="<?php _e( 'Search', 'edd-purchase-details' ); ?> "  />
-				</form>
+			if ( isset( $_GET['epf_nonce_search_form'] ) && wp_verify_nonce( $_GET['epf_nonce_search_form'], 'epf_search_form' ) ) {
+				$value = ( isset( $_GET['epf_customer_email'] ) ? sanitize_email( $_GET['epf_customer_email'] ) : '' );
+			}
+			?>
+				<div class="epf-search">
+					<form  class="epf-search-form" action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ); ?>" method="get">
+						<?php wp_nonce_field( 'epf_search_form', 'epf_nonce_search_form' ); ?>
+						<input type="email" class="epf-search-textbox" name="epf_customer_email" placeholder=" <?php esc_html_e( 'Enter customer email address', 'edd-purchase-details' ); ?>" value="<?php echo esc_attr( $value ); ?>" required/>
+						<input type="submit" class="epf-search-button" value="<?php esc_html_e( 'Search', 'edd-purchase-details' ); ?> "  />
+					</form>
 
-			</div>
-			<?php
+				</div>
+				<?php
+
 		}
 
 		/**
@@ -87,9 +91,10 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 		 *
 		 * @since 0.0.1
 		 */
-		function epf_load_css_file() {
+		public function epf_load_css_file() {
 
-			wp_enqueue_style( 'EDD_PD_stylesheet', EDD_PD_URL . 'assets/css/frontend.css', false, null, 'all' );
+			wp_enqueue_style( 'EDD_PD_stylesheet', EDD_PD_URL . 'assets/css/frontend.css', array(), EDD_PD_VER, 'all' );
+
 		}
 
 		/**
@@ -99,8 +104,8 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 		 * @param  string $content  For clear old content.
 		 * @return content
 		 */
-		function epf_purchase_history( $content ) {
-			if ( isset( $_GET['payment_id'] ) && 'epf_view_history' == $_GET['action'] ) {
+		public function epf_purchase_history( $content ) {
+			if ( isset( $_GET['payment_id'] ) && 'epf_view_history' === $_GET['action'] && isset( $_GET['epf_nonce_search_form'] ) && wp_verify_nonce( $_GET['epf_nonce_search_form'], 'epf_search_form' ) ) {
 				ob_start();
 				$this->epf_view_history( intval( $_GET['payment_id'] ) );
 				$content = ob_get_clean();
@@ -114,7 +119,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 		 *
 		 * @since 0.0.1
 		 */
-		function epf_load_puchase_details() {
+		public function epf_load_puchase_details() {
 
 			if ( ! empty( $_REQUEST['epf_nonce_search_form'] ) ) {
 				if ( wp_verify_nonce( $_REQUEST['epf_nonce_search_form'], 'epf_search_form' ) ) {
@@ -132,7 +137,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 		 * @since 0.0.1
 		 * @return bool
 		 */
-		function epf_check_valid_user() {
+		public function epf_check_valid_user() {
 			if ( is_array( get_option( 'edd_pd_user_access' ) ) ) {
 				$user_info = wp_get_current_user();
 				if ( count( array_intersect( $user_info->roles, get_option( 'edd_pd_user_access' ) ) ) > 0 ) {
@@ -152,18 +157,18 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 		 * @param  string $email  For user purchase details.
 		 * @return void
 		 */
-		function epf_view_product_details( $email ) {
+		public function epf_view_product_details( $email ) {
 
 			if ( ! is_user_logged_in() ) {
 				?>
-				<div><p class="epf-error-no-login"><?php _e( ' You are not logged in. Please log in and try again.', 'edd-purchase-details' ); ?></p></div>
+				<div><p class="epf-error-no-login"><?php esc_html_e( ' You are not logged in. Please log in and try again.', 'edd-purchase-details' ); ?></p></div>
 				<?php
 
 			} else {
 
 				if ( ! $this->epf_check_valid_user() ) {
 					?>
-					<div><p class="epf-error-no-permission"><?php _e( 'You do not have permission to access purchase history!', 'edd-purchase-details' ); ?></p></div>
+					<div><p class="epf-error-no-permission"><?php esc_html_e( 'You do not have permission to access purchase history!', 'edd-purchase-details' ); ?></p></div>
 					<?php
 
 				} else {
@@ -171,7 +176,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 
 					if ( empty( $customer_details ) ) {
 						?>
-							<div><p class="epf-error-no-email"><?php _e( 'The email you have entered does not exist. ', 'edd-purchase-details' ); ?></p></div>
+							<div><p class="epf-error-no-email"><?php esc_html_e( 'The email you have entered does not exist. ', 'edd-purchase-details' ); ?></p></div>
 						<?php
 					} else {
 						$payment_ids = edd_get_users_purchases( $customer_details->ID, 50, true, 'any' );
@@ -183,12 +188,12 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 									<thead>
 										<tr class="edd-purchase-row">
 											<?php do_action( 'access_to_purchase_details_header_before' ); ?>
-											<th class="edd_purchase_id"><?php _e( 'ID', 'edd-purchase-details' ); ?></th>
-											<th class="edd_purchase_date"><?php _e( 'Date', 'edd-purchase-details' ); ?></th>
-											<th class="edd_purchase_products"><?php _e( 'Products', 'edd-purchase-details' ); ?></th>
-											<th class="edd_purchase_amount"><?php _e( 'Amount', 'edd-purchase-details' ); ?></th>
-											<th class="edd_purchase_status"><?php _e( 'Status', 'edd-purchase-details' ); ?></th>
-											<th class="edd_purchase_details"><?php _e( 'License Keys', 'edd-purchase-details' ); ?></th>
+											<th class="edd_purchase_id"><?php esc_html_e( 'ID', 'edd-purchase-details' ); ?></th>
+											<th class="edd_purchase_date"><?php esc_html_e( 'Date', 'edd-purchase-details' ); ?></th>
+											<th class="edd_purchase_products"><?php esc_html_e( 'Products', 'edd-purchase-details' ); ?></th>
+											<th class="edd_purchase_amount"><?php esc_html_e( 'Amount', 'edd-purchase-details' ); ?></th>
+											<th class="edd_purchase_status"><?php esc_html_e( 'Status', 'edd-purchase-details' ); ?></th>
+											<th class="edd_purchase_details"><?php esc_html_e( 'License Keys', 'edd-purchase-details' ); ?></th>
 											<?php do_action( 'access_to_purchase_details_header_after' ); ?>
 										</tr>
 									</thead>
@@ -201,10 +206,10 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 										<tr class="edd_purchase_row">
 											<?php do_action( 'access_to_purchase_details_row_start', $payment->ID, $payment->payment_meta ); ?>
 											<td class="edd_purchase_id">#<?php echo esc_attr( $purchase->number ); ?></td>
-											<td class="edd_purchase_date"><?php echo date_i18n( get_option( 'date_format' ), strtotime( $purchase->date ) ); ?></td>
+											<td class="edd_purchase_date"><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime( $purchase->date ) ) ); ?></td>
 											<td class="edd_purchase_products"><?php echo esc_html( $purchase->cart_details[0]['name'] ); ?></span>
 											</td>
-											<td class="edd_purchase_amount"><?php echo edd_currency_filter( edd_format_amount( $purchase->total ) ); ?></span>
+											<td class="edd_purchase_amount"><?php echo esc_html( edd_currency_filter( edd_format_amount( $purchase->total ) ) ); ?></span>
 											</td>
 											<td class="edd_purchase_details">
 													<?php echo esc_attr( $purchase->status_nicename ); ?>
@@ -221,7 +226,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 											);
 											if ( function_exists( 'edd_software_licensing' ) ) {
 												if ( edd_is_payment_complete( $payment->ID ) && edd_software_licensing()->get_licenses_of_purchase( $payment->ID ) ) {
-													echo '<a href="' . esc_url( $history ) . '">' . __( 'View Licenses', 'edd-purchase-details' ) . '</a>';
+													echo '<a href="' . esc_url( $history ) . '">' . esc_html__( 'View Licenses', 'edd-purchase-details' ) . '</a>';
 												} else {
 													echo ' - ';
 												}
@@ -239,7 +244,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 
 						<?php else : ?>
 
-						<div><p class="epf-error-no-purchases"><?php _e( 'This user hasn\'t purchased anything!', 'edd-purchase-details' ); ?></p></div>
+						<div><p class="epf-error-no-purchases"><?php esc_html_e( 'This user hasn\'t purchased anything!', 'edd-purchase-details' ); ?></p></div>
 								<?php
 						endif;
 					}
@@ -254,32 +259,32 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 		 * @param  Int $payment_id   View history by payment_id.
 		 * @return void|bool
 		 */
-		function epf_view_history( $payment_id ) {
+		public function epf_view_history( $payment_id ) {
 
 			if ( ! is_user_logged_in() ) {
 				?>
-				<div><p class="epf-error-no-login"><?php _e( ' You are not logged in. Please log in and try again.', 'edd-purchase-details' ); ?></p></div>
+				<div><p class="epf-error-no-login"><?php esc_html_e( ' You are not logged in. Please log in and try again.', 'edd-purchase-details' ); ?></p></div>
 				<?php
 			} else {
 				if ( ! $this->epf_check_valid_user() ) {
 
 					?>
-					<div><p class="epf-error-no-permission"><?php _e( 'You do not have permission to access purchase history!', 'edd-purchase-details' ); ?></p></div>
+					<div><p class="epf-error-no-permission"><?php esc_html_e( 'You do not have permission to access purchase history!', 'edd-purchase-details' ); ?></p></div>
 					<?php
 
 				} else {
 
 					$color = edd_get_option( 'checkout_color', 'gray' );
-					$color = ( 'inherit' == $color ) ? '' : $color;
+					$color = ( 'inherit' === $color ) ? '' : $color;
 
 					?>
-					<p><a href="<?php echo esc_url( remove_query_arg( array( 'action', 'payment_id' ) ) ); ?>" class="epf-view-license-back edd-submit button <?php echo esc_attr( $color ); ?>"><?php _e( 'Go back', 'edd-purchase-details' ); ?></a></p>
+					<p><a href="<?php echo esc_url( remove_query_arg( array( 'action', 'payment_id' ) ) ); ?>" class="epf-view-license-back edd-submit button <?php echo esc_attr( $color ); ?>"><?php esc_html_e( 'Go back', 'edd-purchase-details' ); ?></a></p>
 					<?php
 					if ( ! function_exists( 'edd_software_licensing' ) ) {
 						return false;
 					} else {
 						if ( ! isset( $payment_id ) ) {
-							echo $payment_id;
+							echo esc_html( $payment_id );
 
 						} else {
 							$child_keys = edd_software_licensing()->get_licenses_of_purchase( $payment_id );
@@ -291,11 +296,11 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 										<thead>
 											<tr class="edd_purchase_row">
 								<?php do_action( 'epf_download_history_header_start' ); ?>
-											<th class=" edd_purchase_amount"><?php _e( 'Item', 'edd-purchase-details' ); ?></th>
-											<th class="edd_purchase_details"><?php _e( 'Key', 'edd-purchase-details' ); ?></th>
-											<th class="edd_license_key"><?php _e( 'Status', 'edd-purchase-details' ); ?></th>
-											<th class="edd_license_key"><?php _e( 'Activations', 'edd-purchase-details' ); ?></th>
-											<th class="edd_purchase_date"><?php _e( 'Expiration', 'edd-purchase-details' ); ?></th>
+											<th class=" edd_purchase_amount"><?php esc_html_e( 'Item', 'edd-purchase-details' ); ?></th>
+											<th class="edd_purchase_details"><?php esc_html_e( 'Key', 'edd-purchase-details' ); ?></th>
+											<th class="edd_license_key"><?php esc_html_e( 'Status', 'edd-purchase-details' ); ?></th>
+											<th class="edd_license_key"><?php esc_html_e( 'Activations', 'edd-purchase-details' ); ?></th>
+											<th class="edd_purchase_date"><?php esc_html_e( 'Expiration', 'edd-purchase-details' ); ?></th>
 								<?php do_action( 'epf_download_history_header_end' ); ?>
 											</tr>
 										</thead>
@@ -311,10 +316,10 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 													<td class="edd_sl_limit"><?php echo esc_attr( $child_key->activation_count ); ?> / <?php echo esc_attr( $child_key->activation_limit ); ?></td>
 													<td class="edd_sl_expiration">
 									<?php
-									if ( 0 == $child_key->expiration ) {
+									if ( 0 === $child_key->expiration ) {
 										echo esc_attr( $child_key->expiration );
 									} else {
-										echo date_i18n( 'F j, Y', $child_key->expiration );
+										echo esc_html( date_i18n( 'F j, Y', $child_key->expiration ) );
 									}
 									?>
 													</td> 
