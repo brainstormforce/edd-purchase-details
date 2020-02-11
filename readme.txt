@@ -38,6 +38,9 @@ Access to purchase details of Easy Digital Downloads customers using an email ad
 1. Go to `Downloads -> Access Payment History` page.
 1. Here you can manage user roles to which you want to give access to purchase details info. 
 
+== Screenshots ==
+1. Settings 
+
 == Changelog ==
 
 = 1.0.1 =
