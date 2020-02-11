@@ -68,12 +68,12 @@ if ( ! class_exists( 'Edd_Purchase_Details_Loader' ) ) {
 		 *
 		 * @return void
 		 */
-		public  function epf_fails_to_load() {
+		public function epf_fails_to_load() {
 			$class = 'notice notice-error';
 			/* translators: %s: html tags */
 			$message = sprintf( __( 'The %1$s EDD Purchase Details %2$s plugin requires %1$s Easy Digital Downloads %2$s plugin installed & activated.', 'edd-purchase-details' ), '<strong>', '</strong>' );
 
-			printf( '<div class="%1$s"><p>%2$s</p>%3$s</div>', esc_attr( $class ), $message, '' );
+			printf( '<div class="%1$s"><p>%2$s</p>%3$s</div>', esc_attr( $class ), wp_kses_post( $message ), '' );
 		}
 
 		/**
