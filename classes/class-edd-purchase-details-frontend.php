@@ -70,9 +70,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 		 */
 		public function epf_form_render_get_customer_data() {
 
-			if ( isset( $_GET['epf_nonce_search_form'] ) && wp_verify_nonce( $_GET['epf_nonce_search_form'], 'epf_search_form' ) ) {
-				$value = ( isset( $_GET['epf_customer_email'] ) ? sanitize_email( $_GET['epf_customer_email'] ) : '' );
-			}
+			$value = ( isset( $_GET['epf_customer_email'] ) ? sanitize_email( $_GET['epf_customer_email'] ) : '' );// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			?>
 				<div class="epf-search">
 					<form  class="epf-search-form" action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ); ?>" method="get">
