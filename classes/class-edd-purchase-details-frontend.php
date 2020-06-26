@@ -103,7 +103,10 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 		 * @return content
 		 */
 		public function epf_purchase_history( $content ) {
-			if ( isset( $_GET['payment_id'] ) && 'epf_view_history' === $_GET['action'] && isset( $_GET['epf_nonce_search_form'] ) && wp_verify_nonce( $_GET['epf_nonce_search_form'], 'epf_search_form' ) ) {
+
+			$action = isset( $_GET['action'] ) ? $_GET['action'] : ''; 
+
+			if ( isset( $_GET['payment_id'] ) && 'epf_view_history' === $action && isset( $_GET['epf_nonce_search_form'] ) && wp_verify_nonce( $_GET['epf_nonce_search_form'], 'epf_search_form' ) ) {
 				ob_start();
 				$this->epf_view_history( intval( $_GET['payment_id'] ) );
 				$content = ob_get_clean();
