@@ -316,6 +316,9 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 									<?php
 									if ( 0 === $child_key->expiration ) {
 										echo esc_attr( $child_key->expiration );
+									} else if ( 'lifetime' === $child_key->expiration ) {
+										
+										 _e( 'Lifetime', 'edd-purchase-details' );
 									} else {
 										echo esc_html( date_i18n( 'F j, Y', $child_key->expiration ) );
 									}
