@@ -227,7 +227,14 @@ module.exports = function (grunt) {
                         }
                     ]
                 }
-            }
+            },
+            wp_readme_to_markdown: {
+                your_target: {
+                    files: {
+                        'README.md': 'readme.txt'
+                    }
+                },
+            },
 
         }
     );
@@ -244,6 +251,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-wp-i18n');
     grunt.loadNpmTasks('grunt-bumpup');
     grunt.loadNpmTasks('grunt-text-replace');
+    grunt.loadNpmTasks( 'grunt-wp-readme-to-markdown' );
 
     // rtlcss, you will still need to install ruby and sass on your system manually to run this
     grunt.registerTask('rtl', ['rtlcss']);
@@ -262,6 +270,9 @@ module.exports = function (grunt) {
 
     // i18n
     grunt.registerTask('i18n', ['addtextdomain', 'makepot']);
+
+    //readme
+    grunt.registerTask( 'readme', ['wp_readme_to_markdown'] );
     
 
     grunt.registerTask('runall', [ 'clean:zip', 'copy', 'compress', 'clean:main','style', 'uglify:js', 'cssmin:css','rtlcss','sass','scss', 'postcss:style', 'rtl','addtextdomain', 'makepot']);
