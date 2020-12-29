@@ -44,7 +44,7 @@ Access to purchase details of Easy Digital Downloads customers using an email ad
 == Changelog ==
 
 = 1.0.4 =
-- Fixed: Compatibility with WordPress 5.6.
+- Fix: Use `esc_html_e` instead of `_e` for escaping.
 
 = 1.0.3 =
 - Fix: PHP notice for undefined variable on purchase details page. 
