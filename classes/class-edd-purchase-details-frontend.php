@@ -104,7 +104,7 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 		 */
 		public function epf_purchase_history( $content ) {
 
-			$action = isset( $_GET['action'] ) ? $_GET['action'] : ''; 
+			$action = isset( $_GET['action'] ) ? $_GET['action'] : '';
 
 			if ( isset( $_GET['payment_id'] ) && 'epf_view_history' === $action && isset( $_GET['epf_nonce_search_form'] ) && wp_verify_nonce( $_GET['epf_nonce_search_form'], 'epf_search_form' ) ) {
 				ob_start();
@@ -319,9 +319,9 @@ if ( ! class_exists( 'EDD_Purchase_Details_Frontend' ) ) {
 									<?php
 									if ( 0 === $child_key->expiration ) {
 										echo esc_attr( $child_key->expiration );
-									} else if ( 'lifetime' === $child_key->expiration ) {
-										
-										 _e( 'Lifetime', 'edd-purchase-details' );
+									} elseif ( 'lifetime' === $child_key->expiration ) {
+
+										esc_html_e( 'Lifetime', 'edd-purchase-details' );
 									} else {
 										echo esc_html( date_i18n( 'F j, Y', $child_key->expiration ) );
 									}
