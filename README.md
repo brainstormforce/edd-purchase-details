@@ -1,11 +1,11 @@
 # Easy Digital Downloads - Purchase Details #
-**Contributors:** [brainstormforce](https://profiles.wordpress.org/brainstormforce)  
+**Contributors:** [pratikchaskar](https://profiles.wordpress.org/pratikchaskar/)  
 **Tags:** digital downloads, download, downloads, e-store, purchase  
 **Donate link:** https://www.paypal.me/BrainstormForce  
 **Requires at least:** 4.4  
 **Requires PHP:** 5.4  
-**Tested up to:** 6.0  
-**Stable tag:** 1.0.4  
+**Tested up to:** 6.1  
+**Stable tag:** 1.0.5  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -42,6 +42,9 @@ Access to purchase details of Easy Digital Downloads customers using an email ad
 1. Settings 
 
 ## Changelog ##
+
+### 1.0.5 ###
+- Improvement: Added compatibility to WordPress 6.1
 
 ### 1.0.4 ###
 - Security: Use escaping for displaying purchase details string.
